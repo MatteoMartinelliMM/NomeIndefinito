@@ -13,8 +13,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         Intent intent = new Intent(this,StarChooserActivity.class);
         startActivity(intent);
+        finish();
     }
 }
