@@ -14,10 +14,12 @@
             android:theme="@style/LoadingTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.StarChooserActivity"/>
+        <activity android:name=".View.StarChooserActivity" />
+        <activity android:name=".View.TrapStarActivity"></activity>
     </application>
 
 </manifest>
