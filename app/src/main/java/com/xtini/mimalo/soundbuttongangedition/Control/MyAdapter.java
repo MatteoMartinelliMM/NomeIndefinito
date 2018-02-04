@@ -20,9 +20,11 @@ import java.util.List;
 
 public class MyAdapter extends PagerAdapter {
 
+    public static final String TRAP_STAR = "TrapStar";
     List<Integer> lstImages;
     Context context;
     LayoutInflater layoutInflater;
+    private String bo;
 
     public MyAdapter(List<Integer> lstImages, Context context) {
         this.lstImages = lstImages;
@@ -48,7 +50,19 @@ public class MyAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = layoutInflater.inflate(R.layout.card_item,container,false);
-        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        final ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+
+        switch (position){
+            case 0:
+                bo = "TonyIlFantino";
+                break;
+            case 1:
+                bo = "DarkWayne";
+                break;
+            case 2:
+                bo = "SferaEbbasta";
+                break;
+        }
         imageView.setImageResource(lstImages.get(position));
         container.addView(view);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +70,7 @@ public class MyAdapter extends PagerAdapter {
             public void onClick(View v) {
                 StarChooserActivity temp = (StarChooserActivity)v.getContext();
                 Intent intent = new Intent(temp, TrapStarActivity.class);
+                intent.putExtra(TRAP_STAR,bo);
                 temp.startActivity(intent);
             }
         });
