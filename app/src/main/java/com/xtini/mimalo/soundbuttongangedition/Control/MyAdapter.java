@@ -2,11 +2,13 @@ package com.xtini.mimalo.soundbuttongangedition.Control;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.xtini.mimalo.soundbuttongangedition.R;
 import com.xtini.mimalo.soundbuttongangedition.View.StarChooserActivity;
@@ -22,12 +24,14 @@ public class MyAdapter extends PagerAdapter {
 
     public static final String TRAP_STAR = "TrapStar";
     List<Integer> lstImages;
+    List<String> lstNomi;
     Context context;
     LayoutInflater layoutInflater;
     private String bo;
 
-    public MyAdapter(List<Integer> lstImages, Context context) {
+    public MyAdapter(List<Integer> lstImages,List<String> lstNomi, Context context) {
         this.lstImages = lstImages;
+        this.lstNomi =  lstNomi;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -47,30 +51,24 @@ public class MyAdapter extends PagerAdapter {
         container.removeView((View)object);
     }
 
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = layoutInflater.inflate(R.layout.card_item,container,false);
         final ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        final TextView  textView = (TextView) view.findViewById(R.id.textView);
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
+        textView.setTypeface(typeface);
 
-        switch (position){
-            case 0:
-                bo = "TonyIlFantino";
-                break;
-            case 1:
-                bo = "DarkWayne";
-                break;
-            case 2:
-                bo = "SferaEbbasta";
-                break;
-        }
         imageView.setImageResource(lstImages.get(position));
         container.addView(view);
+        textView.setText(lstNomi.get(position));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StarChooserActivity temp = (StarChooserActivity)v.getContext();
                 Intent intent = new Intent(temp, TrapStarActivity.class);
-                intent.putExtra(TRAP_STAR,bo);
+                intent.putExtra(TRAP_STAR,textView.getText());
                 temp.startActivity(intent);
             }
         });
