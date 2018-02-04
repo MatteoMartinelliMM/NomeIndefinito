@@ -23,16 +23,6 @@ public class StarChooserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_chooser);
-
-        //sfera = findViewById(R.id.sfera);
-
-        /*sfera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MediaPlayer mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.sferaebbasta_skrt); //NB: questa è una prova è preferibile perchè + mantenbile leggere dati da una dir esterna
-                mediaPlayer.start();
-            }
-        });*/
         initData();
         HorizontalInfiniteCycleViewPager pager = (HorizontalInfiniteCycleViewPager)findViewById(R.id.horizontal_cycle);
         MyAdapter adapter = new MyAdapter(lstImages,lstNomi,getBaseContext());
