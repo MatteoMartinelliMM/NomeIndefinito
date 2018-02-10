@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/nav_open_suggerisci"
+    android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_suggerisci"
+            android:icon="@drawable/music_circle"
+            android:title="Suggerisci un suono" />
+    </group>
+    <group android:id="@+id/nav_open_share"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_condividi_app"
+            android:icon="@drawable/share_variant"
+            android:title="Condividi" />
+    </group>
+    <group android:id="@+id/nav_open_rate"
+    android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_rate_us"
+            android:icon="@drawable/star_outline"
+            android:title="Rate us" />
+    </group>
+    <group android:id="@+id/nav_open_chisiamo"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_chi_siamo"
+            android:icon="@drawable/information"
+            android:title="Chi siamo" />
+    </group>
+
+</menu>
