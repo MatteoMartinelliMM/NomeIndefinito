@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 
-
 /**
  * Created by Teo on 03/02/2018.
  */
@@ -29,10 +28,11 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         this.context = context;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView buttonElement;
         public ImageView soundAction;
         public TextView buttonLabel;
+
         public ViewHolder(View v) {
             super(v);
             buttonElement = itemView.findViewById(R.id.buttonElement);
@@ -40,7 +40,6 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
             buttonLabel = v.findViewById(R.id.buttonLabel);
         }
     }
-
 
 
     @Override
@@ -57,7 +56,10 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         String currentButtonName = buttonNames.get(position);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
-        holder.buttonLabel.setText(" "+currentButtonName+"  ");
+        if (currentButtonName.contains(" ") && currentButtonName.length() > 10) {
+            holder.buttonLabel.setText(currentButtonName);
+        } else
+            holder.buttonLabel.setText("  " + currentButtonName + "  ");
 
     }
 
@@ -65,7 +67,6 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
     public int getItemCount() {
         return buttonNames.size();
     }
-
 
 
 }
