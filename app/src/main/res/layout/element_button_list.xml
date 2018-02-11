@@ -33,11 +33,12 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:background="@color/logoColor"
-                android:maxLength="10"
-                android:text="Eskere"
+                android:maxEms="10"
+                android:singleLine="false"
+                android:text="esghere"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
         </RelativeLayout>
 

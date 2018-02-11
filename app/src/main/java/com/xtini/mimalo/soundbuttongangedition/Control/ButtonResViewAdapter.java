@@ -7,13 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import com.xtini.mimalo.soundbuttongangedition.R;
-
 
 
 /**
@@ -29,18 +30,19 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         this.context = context;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView buttonElement;
-        public ImageView soundAction;
         public TextView buttonLabel;
+        public ImageButton codeineButton;
+
         public ViewHolder(View v) {
             super(v);
             buttonElement = itemView.findViewById(R.id.buttonElement);
-            soundAction = v.findViewById(R.id.soundAction);
             buttonLabel = v.findViewById(R.id.buttonLabel);
+            codeineButton = v.findViewById(R.id.soundAction);
+
         }
     }
-
 
 
     @Override
@@ -54,10 +56,19 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String currentButtonName = buttonNames.get(position);
+        final String currentButtonName = buttonNames.get(position);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
-        holder.buttonLabel.setText(" "+currentButtonName+"  ");
+        if (currentButtonName.contains(" ") && currentButtonName.length() > 10)
+            holder.buttonLabel.setText(currentButtonName);
+        else
+            holder.buttonLabel.setText("  " + currentButtonName + "  ");
+        holder.codeineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),currentButtonName,Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -65,7 +76,6 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
     public int getItemCount() {
         return buttonNames.size();
     }
-
 
 
 }

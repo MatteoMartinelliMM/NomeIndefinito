@@ -18,8 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.StarChooserActivity" />
-        <activity android:name=".View.TrapStarActivity"></activity>
+        <activity android:name=".View.TrapStarActivity" />
+        <activity
+            android:name=".View.StarChooserActivity"
+            android:label="@string/title_activity_star_chooser"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".View.ChiSiamoActivity"></activity>
     </application>
 
 </manifest>
