@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class TrapStar {
     private String trapStarName;
-    private ArrayList<String> fileNames;
+    private ArrayList<String> buttonNames;
 
 
     public String getTrapStarName() {
@@ -20,10 +20,10 @@ public class TrapStar {
     }
 
     public ArrayList<String> getFileNames() {
-        return fileNames;
+        return buttonNames;
     }
 
-    public void setFileNames(ArrayList<String> fileNames) {
-        this.fileNames = fileNames;
+    public void setFileNames(ArrayList<String> buttonNames) {
+        this.buttonNames = buttonNames;
     }
 }

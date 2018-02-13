@@ -2,19 +2,21 @@ package com.xtini.mimalo.soundbuttongangedition.Control;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.os.Environment;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import com.xtini.mimalo.soundbuttongangedition.R;
+
 
 
 /**
@@ -24,10 +26,12 @@ import com.xtini.mimalo.soundbuttongangedition.R;
 public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdapter.ViewHolder> {
     private ArrayList<String> buttonNames;
     private Context context;
+    private String artistName;
 
-    public ButtonResViewAdapter(ArrayList<String> buttonNames, Context context) {
+    public ButtonResViewAdapter(ArrayList<String> buttonNames, String artistName, Context context) {
         this.buttonNames = buttonNames;
         this.context = context;
+        this.artistName = artistName;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -67,6 +71,25 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(),currentButtonName,Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.codeineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MediaPlayer mp = new MediaPlayer();
+                String fileName;
+                /*try {
+                    String path = Environment.getExternalStorageDirectory().getPath();
+                    if(currentButtonName.contains(" "))
+                        fileName = currentButtonName.replace(" ","_");
+                    else
+                        fileName = currentButtonName;
+                    mp.setDataSource(path + artistName + "/"+ fileName.toLowerCase());
+                    mp.prepare();
+                    mp.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
             }
         });
 

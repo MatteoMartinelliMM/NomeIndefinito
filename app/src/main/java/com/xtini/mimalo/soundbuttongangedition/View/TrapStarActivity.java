@@ -11,25 +11,26 @@ import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
 
-import static com.xtini.mimalo.soundbuttongangedition.Control.MyAdapter.TRAP_STAR;
+import static com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter.TRAP_STAR;
 
 public class TrapStarActivity extends AppCompatActivity {
     private ArrayList<String> btnName;
     private RecyclerView buttonList;
     private GridLayoutManager gm;
     private ButtonResViewAdapter buttonsAdapter;
+    private String trapStarName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trap_star);
         getSupportActionBar().hide();
         Intent i = getIntent();
-        String trapStarName = i.getStringExtra(TRAP_STAR);
+        trapStarName = i.getStringExtra(TRAP_STAR);
         setTitle(trapStarName);
         init();
         buttonList = findViewById(R.id.buttonList);
         gm = new GridLayoutManager(this,3);
-        buttonsAdapter = new ButtonResViewAdapter(btnName,this);
+        buttonsAdapter = new ButtonResViewAdapter(btnName,trapStarName,this);
         buttonList.setLayoutManager(gm);
         buttonList.setAdapter(buttonsAdapter);
 

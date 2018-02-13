@@ -20,7 +20,7 @@ import java.util.List;
  * Created by matteoma on 2/3/2018.
  */
 
-public class MyAdapter extends PagerAdapter {
+public class StarChooserAdapter extends PagerAdapter {
 
     public static final String TRAP_STAR = "TrapStar";
     List<Integer> lstImages;
@@ -29,7 +29,7 @@ public class MyAdapter extends PagerAdapter {
     LayoutInflater layoutInflater;
     private String bo;
 
-    public MyAdapter(List<Integer> lstImages,List<String> lstNomi, Context context) {
+    public StarChooserAdapter(List<Integer> lstImages, List<String> lstNomi, Context context) {
         this.lstImages = lstImages;
         this.lstNomi =  lstNomi;
         this.context = context;

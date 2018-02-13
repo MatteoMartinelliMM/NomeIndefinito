@@ -4,21 +4,17 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
-import com.xtini.mimalo.soundbuttongangedition.Control.MyAdapter;
+import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
@@ -39,7 +35,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
         initData();
         HorizontalInfiniteCycleViewPager pager = (HorizontalInfiniteCycleViewPager)findViewById(R.id.horizontal_cycle);
-        MyAdapter adapter = new MyAdapter(lstImages,lstNomi,getBaseContext());
+        StarChooserAdapter adapter = new StarChooserAdapter(lstImages,lstNomi,getBaseContext());
         pager.setAdapter(adapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
