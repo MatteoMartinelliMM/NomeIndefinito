@@ -1,7 +1,5 @@
 package com.xtini.mimalo.soundbuttongangedition.Model;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
 
@@ -9,7 +7,7 @@ import java.util.ArrayList;
  * Created by Teo on 03/02/2018.
  */
 
-public class TrapStar {
+public class TrapStar{
     private String trapStarName;
     private ArrayList<AudioFile> files;
 

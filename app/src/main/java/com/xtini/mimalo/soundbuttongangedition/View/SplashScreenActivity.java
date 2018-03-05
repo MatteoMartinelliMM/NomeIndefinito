@@ -70,7 +70,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, StarChooserActivity.class);
-
         startActivity(intent);
 
         finish();
