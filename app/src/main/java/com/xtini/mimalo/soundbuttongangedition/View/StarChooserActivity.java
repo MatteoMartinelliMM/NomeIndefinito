@@ -30,7 +30,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_chooser);
-        setTitle("");
+        setTitle("TrapSoundboard");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ArrayList<TrapStar> trapStars = SplashScreenActivity.trapStars;

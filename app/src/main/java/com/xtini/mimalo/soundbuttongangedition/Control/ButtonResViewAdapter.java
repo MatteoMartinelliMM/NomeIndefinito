@@ -10,9 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.os.Environment;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,20 +19,17 @@ import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 
-
 /**
  * Created by Teo on 03/02/2018.
  */
 
 public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdapter.ViewHolder> {
-    private ArrayList<AudioFile> buttonNames;
+    private ArrayList<AudioFile> audioList;
     private Context context;
-    private String artistName;
 
-    public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, String artistName, Context context) {
-        this.buttonNames = buttonNames;
+    public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, Context context) {
+        this.audioList = buttonNames;
         this.context = context;
-        this.artistName = artistName;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,9 +58,9 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String currentButtonName = buttonNames.get(position).getFileName();
-        currentButtonName = currentButtonName.substring(0,currentButtonName.length()-4);
-        currentButtonName = currentButtonName.replace("_"," ");
+        String currentButtonName = audioList.get(position).getFileName();
+        currentButtonName = currentButtonName.substring(0, currentButtonName.length() - 4);
+        currentButtonName = currentButtonName.replace("_", " ");
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
         if (currentButtonName.contains(" ") && currentButtonName.length() > 10)
@@ -82,14 +77,15 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
             public void onClick(View view) {
                 try {
                     final MediaPlayer mp = new MediaPlayer();
-                    AssetFileDescriptor assetFileDescriptor = buttonNames.get(position).getSound();
-                    mp.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(),assetFileDescriptor.getLength());
+                    AssetFileDescriptor assetFileDescriptor = audioList.get(position).getSound();
+                    mp.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
                     mp.prepare();
+                    MediaPlayerRegistry.put(mp);
                     mp.start();
                     mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mediaPlayer) {
-                            mp.stop(); //SE NON VIENE STOPPATO DOPO UN ELEVATO NR DI CLICK  NON RIPRODUCE PIU NESSUN SUONO (PENSO)
+                            mp.stop();//SE NON VIENE STOPPATO DOPO UN ELEVATO NR DI CLICK  NON RIPRODUCE PIU NESSUN SUONO (PENSO)
                         }
                     });
                 } catch (IOException e) {
@@ -99,11 +95,9 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         });
 
     }
-
     @Override
     public int getItemCount() {
-        return buttonNames.size();
+        return audioList.size();
     }
-
 
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.xtini.mimalo.soundbuttongangedition.Control.ButtonResViewAdapter;
+import com.xtini.mimalo.soundbuttongangedition.Control.MediaPlayerRegistry;
 import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
 import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
 import com.xtini.mimalo.soundbuttongangedition.R;
@@ -33,10 +34,14 @@ public class TrapStarActivity extends AppCompatActivity {
         audioFiles = StarChooserAdapter.audioFiles;
         buttonList = findViewById(R.id.buttonList);
         gm = new GridLayoutManager(this,3);
-        buttonsAdapter = new ButtonResViewAdapter(audioFiles,trapStarName,this);
+        buttonsAdapter = new ButtonResViewAdapter(audioFiles,this);
         buttonList.setLayoutManager(gm);
         buttonList.setAdapter(buttonsAdapter);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        MediaPlayerRegistry.closePlayers(this);
+        super.onBackPressed();
+    }
 }
