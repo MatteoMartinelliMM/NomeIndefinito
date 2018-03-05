@@ -7,6 +7,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.xtini.mimalo.soundbuttongangedition.Control.ButtonResViewAdapter;
+import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
+import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class TrapStarActivity extends AppCompatActivity {
     private GridLayoutManager gm;
     private ButtonResViewAdapter buttonsAdapter;
     private String trapStarName;
+    private ArrayList<AudioFile> audioFiles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,56 +30,13 @@ public class TrapStarActivity extends AppCompatActivity {
         Intent i = getIntent();
         trapStarName = i.getStringExtra(TRAP_STAR);
         setTitle(trapStarName);
-        init();
+        audioFiles = StarChooserAdapter.audioFiles;
         buttonList = findViewById(R.id.buttonList);
         gm = new GridLayoutManager(this,3);
-        buttonsAdapter = new ButtonResViewAdapter(btnName,trapStarName,this);
+        buttonsAdapter = new ButtonResViewAdapter(audioFiles,trapStarName,this);
         buttonList.setLayoutManager(gm);
         buttonList.setAdapter(buttonsAdapter);
-
-
-
     }
 
-    public void init(){
-        btnName = new ArrayList<>();
-        btnName.add("Bufu Demmerda");
-        btnName.add("skusku");
-        btnName.add("Esghere");
-        btnName.add("Skrt");
-        btnName.add("SktrtSkrt");
-        btnName.add("British");
-        btnName.add("Bufetti");
-        btnName.add("bo");
-        btnName.add("ciao");
-        btnName.add("prova");
-        btnName.add("roma");
-        btnName.add("triplo 7");
-        btnName.add("Bufu Demmerda");
-        btnName.add("skusku");
-        btnName.add("Esghere");
-        btnName.add("Skrt");
-        btnName.add("SktrtSkrt");
-        btnName.add("British");
-        btnName.add("Bufetti");
-        btnName.add("bo");
-        btnName.add("ciao");
-        btnName.add("prova");
-        btnName.add("roma");
-        btnName.add("triplo 7");
-        btnName.add("Bufu Demmerda");
-        btnName.add("skusku");
-        btnName.add("Esghere");
-        btnName.add("Skrt");
-        btnName.add("SktrtSkrt");
-        btnName.add("British");
-        btnName.add("Bufetti");
-        btnName.add("bo");
-        btnName.add("ciao");
-        btnName.add("prova");
-        btnName.add("roma");
-        btnName.add("triplo 7");
-        btnName.add("ciny");
 
-    }
 }

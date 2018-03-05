@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
+import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
@@ -32,10 +33,10 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         setTitle("");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        ArrayList<TrapStar> trapStars = SplashScreenActivity.trapStars;
         initData();
         HorizontalInfiniteCycleViewPager pager = (HorizontalInfiniteCycleViewPager)findViewById(R.id.horizontal_cycle);
-        StarChooserAdapter adapter = new StarChooserAdapter(lstImages,lstNomi,getBaseContext());
+        StarChooserAdapter adapter = new StarChooserAdapter(trapStars,getBaseContext());
         pager.setAdapter(adapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -87,8 +88,8 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     }
 
     private void initData() {
-        lstImages.add(R.drawable.sfera_ebbasta);
-        lstImages.add(R.drawable.tony_effe);
+        lstImages.add(R.drawable.sferaebbasta);
+        lstImages.add(R.drawable.tonyeffe);
         lstImages.add(R.drawable.wayne);
         lstNomi.add("Sfera Ebbasta");
         lstNomi.add("Tony Effe");

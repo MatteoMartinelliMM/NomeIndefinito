@@ -1,6 +1,7 @@
 package com.xtini.mimalo.soundbuttongangedition.Control;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.support.v7.widget.CardView;
@@ -13,8 +14,10 @@ import android.os.Environment;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 
@@ -24,11 +27,11 @@ import com.xtini.mimalo.soundbuttongangedition.R;
  */
 
 public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdapter.ViewHolder> {
-    private ArrayList<String> buttonNames;
+    private ArrayList<AudioFile> buttonNames;
     private Context context;
     private String artistName;
 
-    public ButtonResViewAdapter(ArrayList<String> buttonNames, String artistName, Context context) {
+    public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, String artistName, Context context) {
         this.buttonNames = buttonNames;
         this.context = context;
         this.artistName = artistName;
@@ -59,8 +62,10 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final String currentButtonName = buttonNames.get(position);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        String currentButtonName = buttonNames.get(position).getFileName();
+        currentButtonName = currentButtonName.substring(0,currentButtonName.length()-4);
+        currentButtonName = currentButtonName.replace("_"," ");
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
         if (currentButtonName.contains(" ") && currentButtonName.length() > 10)
@@ -70,26 +75,26 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         holder.codeineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),currentButtonName,Toast.LENGTH_SHORT).show();
             }
         });
         holder.codeineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MediaPlayer mp = new MediaPlayer();
-                String fileName;
-                /*try {
-                    String path = Environment.getExternalStorageDirectory().getPath();
-                    if(currentButtonName.contains(" "))
-                        fileName = currentButtonName.replace(" ","_");
-                    else
-                        fileName = currentButtonName;
-                    mp.setDataSource(path + artistName + "/"+ fileName.toLowerCase());
+                try {
+                    final MediaPlayer mp = new MediaPlayer();
+                    AssetFileDescriptor assetFileDescriptor = buttonNames.get(position).getSound();
+                    mp.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(),assetFileDescriptor.getLength());
                     mp.prepare();
                     mp.start();
-                } catch (Exception e) {
+                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            mp.stop(); //SE NON VIENE STOPPATO DOPO UN ELEVATO NR DI CLICK  NON RIPRODUCE PIU NESSUN SUONO (PENSO)
+                        }
+                    });
+                } catch (IOException e) {
                     e.printStackTrace();
-                }*/
+                }
             }
         });
 

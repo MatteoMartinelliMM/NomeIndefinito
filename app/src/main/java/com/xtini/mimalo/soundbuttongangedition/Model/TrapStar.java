@@ -1,5 +1,8 @@
 package com.xtini.mimalo.soundbuttongangedition.Model;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 
 public class TrapStar {
     private String trapStarName;
-    private ArrayList<String> buttonNames;
+    private ArrayList<AudioFile> files;
 
 
     public String getTrapStarName() {
@@ -19,11 +22,13 @@ public class TrapStar {
         this.trapStarName = trapStarName;
     }
 
-    public ArrayList<String> getFileNames() {
-        return buttonNames;
+
+
+    public ArrayList<AudioFile> getFileNames() {
+        return files;
     }
 
-    public void setFileNames(ArrayList<String> buttonNames) {
-        this.buttonNames = buttonNames;
+    public void setFileNames(ArrayList<AudioFile> files) {
+        this.files = files;
     }
 }
