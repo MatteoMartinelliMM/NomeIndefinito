@@ -90,7 +90,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private void initData() {
         lstImages.add(R.drawable.sferaebbasta);
         lstImages.add(R.drawable.tonyeffe);
-        lstImages.add(R.drawable.wayne);
+        lstImages.add(R.drawable.darkwayne);
         lstNomi.add("Sfera Ebbasta");
         lstNomi.add("Tony Effe");
         lstNomi.add("Dark Wayne");
