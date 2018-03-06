@@ -4,7 +4,9 @@ package com.xtini.mimalo.soundbuttongangedition.Control;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,14 +29,21 @@ import com.xtini.mimalo.soundbuttongangedition.R;
  */
 
 public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdapter.ViewHolder> {
+    public static final String ALZA_IL_VOLUME_BUFU = "Alza il volume BUFU!";
     private ArrayList<AudioFile> audioList;
     private Context context;
-
+    private  AudioManager audioManager;
+    private Toast toast;
 
 
     public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, Context context) {
         this.audioList = buttonNames;
         this.context = context;
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        toast = Toast.makeText(context,ALZA_IL_VOLUME_BUFU,Toast.LENGTH_SHORT);
+        TextView toastMessage = toast.getView().findViewById(android.R.id.message);
+        toastMessage.setTextColor(context.getResources().getColor(R.color.cardview_light_background));
+        toastMessage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
     }
 
 
@@ -83,24 +93,30 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
                 AssetFileDescriptor assetFileDescriptor = audioList.get(position).getSound();
                 final MediaPlayer mp = new MediaPlayer();
                 MediaPlayerRegistry.put(mp);
-
-                try {
-                    mp.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
-                    mp.prepare();
-                    mp.start();
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mediaPlayer) {
-                            MediaPlayerRegistry.releaseSinglePlayer(mediaPlayer.getAudioSessionId());
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                if(volumeIsOn()) {
+                    try {
+                        mp.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
+                        mp.prepare();
+                        mp.start();
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                MediaPlayerRegistry.releaseSinglePlayer(mediaPlayer.getAudioSessionId());
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else
+                    toast.show();
             }
 
         });
 
+    }
+
+    private boolean volumeIsOn() {
+        return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) != 0;
     }
 
     @Override
