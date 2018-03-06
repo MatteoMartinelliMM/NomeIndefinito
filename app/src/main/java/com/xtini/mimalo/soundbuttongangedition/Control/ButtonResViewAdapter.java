@@ -1,5 +1,7 @@
 package com.xtini.mimalo.soundbuttongangedition.Control;
 
+
+
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Typeface;
@@ -27,10 +29,13 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
     private ArrayList<AudioFile> audioList;
     private Context context;
 
+
+
     public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, Context context) {
         this.audioList = buttonNames;
         this.context = context;
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView buttonElement;
@@ -75,29 +80,33 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         holder.codeineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AssetFileDescriptor assetFileDescriptor = audioList.get(position).getSound();
+                final MediaPlayer mp = new MediaPlayer();
+                MediaPlayerRegistry.put(mp);
+
                 try {
-                    final MediaPlayer mp = new MediaPlayer();
-                    AssetFileDescriptor assetFileDescriptor = audioList.get(position).getSound();
                     mp.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
                     mp.prepare();
-                    MediaPlayerRegistry.put(mp);
                     mp.start();
                     mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mediaPlayer) {
-                            mp.stop();//SE NON VIENE STOPPATO DOPO UN ELEVATO NR DI CLICK  NON RIPRODUCE PIU NESSUN SUONO (PENSO)
+                            MediaPlayerRegistry.releaseSinglePlayer(mediaPlayer.getAudioSessionId());
                         }
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+
         });
 
     }
+
     @Override
     public int getItemCount() {
         return audioList.size();
     }
+
 
 }

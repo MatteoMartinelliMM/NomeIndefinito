@@ -4,28 +4,41 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashMap;
+import java.util.Iterator;
+
 
 /**
  * Created by matteoma on 3/5/2018.
  */
 
 public class MediaPlayerRegistry {
-    public static List<MediaPlayer> playersList = new ArrayList<>();
+    public static HashMap<Integer , MediaPlayer> playersList = new HashMap<>();
 
     public static void put(MediaPlayer player) {
-        playersList.add(player);
+        playersList.put(player.getAudioSessionId(),player);
     }
 
     public static void closePlayers(Context context) {
         ProgressDialog dialog = new ProgressDialog(context);
-        dialog.onStart(); //Blocco la UI ficnhè non ha stoppato tutti i suoni
-        for (MediaPlayer player : playersList)
-            if (player != null && player.isPlaying())
-                player.release();
-        playersList = new ArrayList<>();
-        dialog.dismiss();
-        dialog.cancel();
+        dialog.onStart();
+        Iterator<Integer> list = playersList.keySet().iterator();
+        try {
+            while(list.hasNext()){
+                Integer i = list.next();
+                playersList.get(i).release();
+            }
+        }catch (IllegalStateException e){
+
+        }finally {
+            playersList = new HashMap<>();
+            dialog.dismiss();
+            dialog.cancel();
+        }
+    }
+
+    public static void releaseSinglePlayer(Integer i){
+        playersList.get(i).release();
     }
 }

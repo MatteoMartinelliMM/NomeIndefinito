@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import static com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter.TRAP_STAR;
 
 public class TrapStarActivity extends AppCompatActivity {
-    private ArrayList<String> btnName;
     private RecyclerView buttonList;
     private GridLayoutManager gm;
     private ButtonResViewAdapter buttonsAdapter;
