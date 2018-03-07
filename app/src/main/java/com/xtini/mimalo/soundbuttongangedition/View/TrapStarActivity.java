@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.RelativeLayout;
 
 import com.xtini.mimalo.soundbuttongangedition.Control.ButtonResViewAdapter;
 import com.xtini.mimalo.soundbuttongangedition.Control.MediaPlayerRegistry;
@@ -22,6 +23,7 @@ public class TrapStarActivity extends AppCompatActivity {
     private ButtonResViewAdapter buttonsAdapter;
     private String trapStarName;
     private ArrayList<AudioFile> audioFiles;
+    private RelativeLayout parentLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +33,10 @@ public class TrapStarActivity extends AppCompatActivity {
         trapStarName = i.getStringExtra(TRAP_STAR);
         setTitle(trapStarName);
         audioFiles = StarChooserAdapter.audioFiles;
+        parentLayout = findViewById(R.id.parentLayout);
         buttonList = findViewById(R.id.buttonList);
         gm = new GridLayoutManager(this,3);
-        buttonsAdapter = new ButtonResViewAdapter(audioFiles,this);
+        buttonsAdapter = new ButtonResViewAdapter(audioFiles,this, parentLayout);
         buttonList.setLayoutManager(gm);
         buttonList.setAdapter(buttonsAdapter);
     }

@@ -4,7 +4,6 @@ package com.xtini.mimalo.soundbuttongangedition.Control;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -29,21 +28,19 @@ import com.xtini.mimalo.soundbuttongangedition.R;
  */
 
 public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdapter.ViewHolder> {
-    public static final String ALZA_IL_VOLUME_BUFU = "Alza il volume BUFU!";
+    public static final String ALZA_IL_VOLUME_BUFU = " Alza il volume BUFU! ";
     private ArrayList<AudioFile> audioList;
     private Context context;
     private  AudioManager audioManager;
     private Toast toast;
 
 
-    public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, Context context) {
+    public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, Context context, View v) {
         this.audioList = buttonNames;
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        toast = Toast.makeText(context,ALZA_IL_VOLUME_BUFU,Toast.LENGTH_SHORT);
-        TextView toastMessage = toast.getView().findViewById(android.R.id.message);
-        toastMessage.setTextColor(context.getResources().getColor(R.color.cardview_light_background));
-        toastMessage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
+        createCustomToast(context, v);
+
     }
 
 
@@ -122,6 +119,20 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
     @Override
     public int getItemCount() {
         return audioList.size();
+    }
+
+    private void createCustomToast(Context context, View v) {
+        toast = Toast.makeText(context, ALZA_IL_VOLUME_BUFU, Toast.LENGTH_SHORT);
+        LayoutInflater inflater = (LayoutInflater)
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup)
+                v.findViewById(R.id.like_popup_layout));
+
+        TextView text = layout.findViewById(R.id.like_popup_tv);
+        text.setText(ALZA_IL_VOLUME_BUFU);
+        layout.setAlpha(0.6f);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
     }
 
 
