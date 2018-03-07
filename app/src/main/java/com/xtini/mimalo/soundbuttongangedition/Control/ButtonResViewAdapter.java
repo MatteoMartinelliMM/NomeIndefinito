@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,7 +70,7 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         String currentButtonName = audioList.get(position).getFileName();
         currentButtonName = currentButtonName.substring(0, currentButtonName.length() - 4);
         currentButtonName = currentButtonName.replace("_", " ");
@@ -87,6 +88,8 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         holder.codeineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.buttonLabel.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
+                view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
                 AssetFileDescriptor assetFileDescriptor = audioList.get(position).getSound();
                 final MediaPlayer mp = new MediaPlayer();
                 MediaPlayerRegistry.put(mp);
@@ -131,7 +134,7 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         TextView text = layout.findViewById(R.id.like_popup_tv);
         text.setText(ALZA_IL_VOLUME_BUFU);
         layout.setAlpha(0.6f);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
     }
 
