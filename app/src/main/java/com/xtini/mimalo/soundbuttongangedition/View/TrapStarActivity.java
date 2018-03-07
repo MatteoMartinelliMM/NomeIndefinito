@@ -24,6 +24,7 @@ public class TrapStarActivity extends AppCompatActivity {
     private String trapStarName;
     private ArrayList<AudioFile> audioFiles;
     private RelativeLayout parentLayout;
+    private boolean playerIsReleased = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,14 @@ public class TrapStarActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         MediaPlayerRegistry.closePlayers(this);
+        playerIsReleased = true;
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!playerIsReleased)
+            MediaPlayerRegistry.closePlayers(this);
     }
 }
