@@ -102,7 +102,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try
         {
-            this.startActivity(myAppLinkToMarket);
+            this.startActivity(Intent.createChooser(myAppLinkToMarket, "Rate us"));
         }
         catch (ActivityNotFoundException e)
         {
@@ -118,19 +118,22 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             String sAux = "\nSe non la scarichi sei solo uno stupido BUFU!\n";
             sAux = sAux + "https://play.google.com/store/apps/details?id=Orion.Soft \n\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
-            startActivityForResult(Intent.createChooser(i, "choose one"),0);
+            startActivityForResult(Intent.createChooser(i, "Condividi CIUCCIONE!"),0);
         } catch(Exception e) {
             //e.toString();
         }
     }
 
     public void adviceSound(){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/html");
-        intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Aggiunta suono");
-        intent.putExtra(Intent.EXTRA_TEXT, "Se non mettete questo suono siete solo degli stupidi bufetti.");
+        String uriText =
+                "mailto:mimalo@gmail.com" +
+                        "?subject=" + Uri.encode("Aggiunta suono") +
+                        "&body=" + Uri.encode("Se non mettete questo suono siete solo degli stupidi bufetti.");
 
-        startActivity(Intent.createChooser(intent, "Send Email"));
+        Uri uri = Uri.parse(uriText);
+
+        Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+        sendIntent.setData(uri);
+        startActivity(Intent.createChooser(sendIntent, "Suggeriscici un suono"));
     }
 }
