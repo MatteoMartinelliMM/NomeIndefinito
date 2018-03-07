@@ -23,9 +23,8 @@ import java.util.List;
 
 public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    List<Integer> lstImages = new ArrayList<>();
-    List<String> lstNomi = new ArrayList<>();
 
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +33,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ArrayList<TrapStar> trapStars = SplashScreenActivity.trapStars;
-        initData();
+
         HorizontalInfiniteCycleViewPager pager = (HorizontalInfiniteCycleViewPager)findViewById(R.id.horizontal_cycle);
         StarChooserAdapter adapter = new StarChooserAdapter(trapStars,getBaseContext());
         pager.setAdapter(adapter);
@@ -45,7 +44,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -81,24 +80,15 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                 startActivity(new Intent(this,ChiSiamoActivity.class));
                 break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void initData() {
-        lstImages.add(R.drawable.sferaebbasta);
-        lstImages.add(R.drawable.tonyeffe);
-        lstImages.add(R.drawable.darkwayne);
-        lstNomi.add("Sfera Ebbasta");
-        lstNomi.add("Tony Effe");
-        lstNomi.add("Dark Wayne");
-    }
 
     public void rateUs()
     {
-        Uri uri = Uri.parse("https://play.google.com/store/music/artist/Sfera_Ebbasta" /*+ this.getPackageName()*/);
+        Uri uri = Uri.parse("market://details?id=" + "com.facebook.katana");
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try
         {
@@ -118,6 +108,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             String sAux = "\nSe non la scarichi sei solo uno stupido BUFU!\n";
             sAux = sAux + "https://play.google.com/store/apps/details?id=Orion.Soft \n\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
+            navigationView.getMenu().getItem(0).setChecked(false);
             startActivityForResult(Intent.createChooser(i, "Condividi CIUCCIONE!"),0);
         } catch(Exception e) {
             //e.toString();

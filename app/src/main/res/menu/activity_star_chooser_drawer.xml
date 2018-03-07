@@ -4,28 +4,28 @@
     tools:showIn="navigation_view">
 
     <group android:id="@+id/nav_open_suggerisci"
-        android:checkableBehavior="single">
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_suggerisci"
             android:icon="@drawable/music_circle"
             android:title="Suggerisci un suono" />
     </group>
     <group android:id="@+id/nav_open_share"
-        android:checkableBehavior="single">
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_condividi_app"
             android:icon="@drawable/share_variant"
             android:title="Condividi" />
     </group>
     <group android:id="@+id/nav_open_rate"
-        android:checkableBehavior="single">
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_rate_us"
             android:icon="@drawable/rate_us"
             android:title="Rate us" />
     </group>
     <group android:id="@+id/nav_open_chisiamo"
-        android:checkableBehavior="single">
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_chi_siamo"
             android:icon="@drawable/information_outline"
