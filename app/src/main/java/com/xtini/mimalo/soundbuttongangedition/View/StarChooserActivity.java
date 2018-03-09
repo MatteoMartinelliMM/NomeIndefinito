@@ -19,7 +19,6 @@ import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,27 +29,27 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_chooser);
         setTitle("TrapSoundboard");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ArrayList<TrapStar> trapStars = SplashScreenActivity.trapStars;
 
-        HorizontalInfiniteCycleViewPager pager = (HorizontalInfiniteCycleViewPager)findViewById(R.id.horizontal_cycle);
+        HorizontalInfiniteCycleViewPager pager = findViewById(R.id.horizontal_cycle);
         StarChooserAdapter adapter = new StarChooserAdapter(trapStars,getBaseContext());
         pager.setAdapter(adapter);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -88,11 +87,11 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
     public void rateUs()
     {
-        Uri uri = Uri.parse("market://details?id=" + "com.facebook.katana");
+        Uri uri = Uri.parse("market://details?id=" + "com.facebook.katana"/*getPackageName()*/);
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try
         {
-            this.startActivity(Intent.createChooser(myAppLinkToMarket, "Rate us"));
+            this.startActivity(myAppLinkToMarket);
         }
         catch (ActivityNotFoundException e)
         {

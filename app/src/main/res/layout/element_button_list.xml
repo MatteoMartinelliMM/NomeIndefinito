@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        >
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -33,12 +34,12 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:background="@color/logoColor"
-                android:maxEms="10"
+                android:maxEms="16"
                 android:singleLine="false"
                 android:text="esghere"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </RelativeLayout>
 

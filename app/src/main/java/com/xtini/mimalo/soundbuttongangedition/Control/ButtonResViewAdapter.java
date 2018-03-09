@@ -76,7 +76,7 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         currentButtonName = currentButtonName.replace("_", " ");
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
-        if (currentButtonName.contains(" ") && currentButtonName.length() > 10)
+        if (currentButtonName.contains(" ") && currentButtonName.length() > 16)
             holder.buttonLabel.setText(currentButtonName);
         else
             holder.buttonLabel.setText("  " + currentButtonName + "  ");
