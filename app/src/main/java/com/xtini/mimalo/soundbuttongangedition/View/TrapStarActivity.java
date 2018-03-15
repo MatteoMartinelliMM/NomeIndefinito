@@ -14,13 +14,17 @@ import com.xtini.mimalo.soundbuttongangedition.Control.ButtonResViewAdapter;
 import com.xtini.mimalo.soundbuttongangedition.Control.MediaPlayerRegistry;
 import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
 import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
+
 import com.xtini.mimalo.soundbuttongangedition.R;
+
+
 
 import java.util.ArrayList;
 
 import static com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter.TRAP_STAR;
 
 public class TrapStarActivity extends AppCompatActivity{
+    public static int howManyClick;
     private RecyclerView buttonList;
     private GridLayoutManager gm;
     private ButtonResViewAdapter buttonsAdapter;
@@ -35,6 +39,7 @@ public class TrapStarActivity extends AppCompatActivity{
         setContentView(R.layout.activity_trap_star);
         getSupportActionBar().hide();
         Intent i = getIntent();
+        howManyClick = StarChooserActivity.howManyClick;
         trapStarName = i.getStringExtra(TRAP_STAR);
         setTitle(trapStarName);
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -55,10 +60,20 @@ public class TrapStarActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if(!playerIsReleased)
             MediaPlayerRegistry.closePlayers(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -75,6 +90,7 @@ public class TrapStarActivity extends AppCompatActivity{
             case KeyEvent.KEYCODE_BACK:
                 onBackPressed();
                 return true;
+
             default:
                 return false;
         }

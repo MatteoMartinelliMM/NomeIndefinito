@@ -1,7 +1,6 @@
 package com.xtini.mimalo.soundbuttongangedition.Control;
 
 
-
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Typeface;
@@ -22,6 +21,9 @@ import java.util.ArrayList;
 
 import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
 import com.xtini.mimalo.soundbuttongangedition.R;
+import com.xtini.mimalo.soundbuttongangedition.View.TrapStarActivity;
+import com.xtini.mimalo.soundbuttongangedition.View.ViewUtilities;
+
 
 
 /**
@@ -29,18 +31,18 @@ import com.xtini.mimalo.soundbuttongangedition.R;
  */
 
 public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdapter.ViewHolder> {
-    public static final String ALZA_IL_VOLUME_BUFU = " Alza il volume BUFU! ";
+
     private ArrayList<AudioFile> audioList;
     private Context context;
-    private  AudioManager audioManager;
+    private AudioManager audioManager;
     private Toast toast;
-
+    public static final String ALZA_IL_VOLUME_BUFU = " Alza il volume BUFU! ";
 
     public ButtonResViewAdapter(ArrayList<AudioFile> buttonNames, Context context, View v) {
         this.audioList = buttonNames;
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        createCustomToast(context, v);
+        toast = ViewUtilities.createCustomToast(context, v, ALZA_IL_VOLUME_BUFU);
 
     }
 
@@ -76,24 +78,22 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         currentButtonName = currentButtonName.replace("_", " ");
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
+
         if (currentButtonName.contains(" ") && currentButtonName.length() > 16)
             holder.buttonLabel.setText(currentButtonName);
         else
             holder.buttonLabel.setText("  " + currentButtonName + "  ");
+
         holder.codeineButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-            }
-        });
-        holder.codeineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 holder.buttonLabel.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
+                TrapStarActivity.howManyClick++;
                 view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
                 AssetFileDescriptor assetFileDescriptor = audioList.get(position).getSound();
                 final MediaPlayer mp = new MediaPlayer();
                 MediaPlayerRegistry.put(mp);
-                if(volumeIsOn()) {
+                if (volumeIsOn()) {
                     try {
                         mp.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
                         mp.prepare();
@@ -107,7 +107,7 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else
+                } else
                     toast.show();
             }
 
@@ -122,20 +122,6 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
     @Override
     public int getItemCount() {
         return audioList.size();
-    }
-
-    private void createCustomToast(Context context, View v) {
-        toast = Toast.makeText(context, ALZA_IL_VOLUME_BUFU, Toast.LENGTH_SHORT);
-        LayoutInflater inflater = (LayoutInflater)
-                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup)
-                v.findViewById(R.id.like_popup_layout));
-
-        TextView text = layout.findViewById(R.id.like_popup_tv);
-        text.setText(ALZA_IL_VOLUME_BUFU);
-        layout.setAlpha(0.6f);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
     }
 
 
