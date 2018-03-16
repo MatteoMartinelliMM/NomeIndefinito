@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
 import com.xtini.mimalo.soundbuttongangedition.Control.ButtonResViewAdapter;
@@ -21,6 +22,8 @@ import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
 
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.ACTION_UP;
 import static com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter.TRAP_STAR;
 
 public class TrapStarActivity extends AppCompatActivity{
@@ -33,6 +36,9 @@ public class TrapStarActivity extends AppCompatActivity{
     private RelativeLayout parentLayout;
     private boolean playerIsReleased = false;
     private AudioManager audio;
+    private float x1,y1,x2,y2;
+    private final float MIN_DISTANCE = 150;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +78,26 @@ public class TrapStarActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case ACTION_DOWN:
+                x1 = event.getX();
+                y1 = event.getY();
+                break;
+            case ACTION_UP:
+                x2 = event.getX();
+                y2 = event.getY();
+                float deltaY = Math.abs(y2 - y1);
+                float deltaX = Math.abs(x2 - x1);
+                if (deltaX > MIN_DISTANCE && deltaY < MIN_DISTANCE) {
+                    if (x1 > x2)
+                        onBackPressed();
+                }
+
+        }
+        return super.onTouchEvent(event);
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
