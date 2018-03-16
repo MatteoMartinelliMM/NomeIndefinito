@@ -79,10 +79,13 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
 
-        if (currentButtonName.contains(" ") && currentButtonName.length() > 16)
+        /*if (currentButtonName.contains(" ") && currentButtonName.length() > 16)
             holder.buttonLabel.setText(currentButtonName);
         else
-            holder.buttonLabel.setText("  " + currentButtonName + "  ");
+            holder.buttonLabel.setText("  " + currentButtonName + "  ");*/
+
+        //currentButtonName = FormatButtonLabel.format(currentButtonName);
+        holder.buttonLabel.setText(" "+ currentButtonName+" ");
 
         holder.codeineButton.setOnClickListener(new View.OnClickListener() {
             @Override
