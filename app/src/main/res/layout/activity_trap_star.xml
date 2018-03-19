@@ -5,6 +5,7 @@
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/homeBg"
     tools:context="com.xtini.mimalo.soundbuttongangedition.View.TrapStarActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -12,5 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@color/homeBg" />
 </RelativeLayout>
