@@ -91,7 +91,6 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
             @Override
             public void onClick(final View view) {
                 holder.buttonLabel.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
-                TrapStarActivity.howManyClick++;
                 view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
                 AssetFileDescriptor assetFileDescriptor = audioList.get(position).getSound();
                 final MediaPlayer mp = new MediaPlayer();

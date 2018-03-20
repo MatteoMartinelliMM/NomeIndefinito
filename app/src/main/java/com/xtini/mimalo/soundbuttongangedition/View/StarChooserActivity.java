@@ -26,7 +26,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
 
     NavigationView navigationView;
-    public static int howManyClick;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast toast;
     private DrawerLayout drawer;

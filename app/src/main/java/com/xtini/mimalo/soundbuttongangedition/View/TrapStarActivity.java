@@ -27,7 +27,7 @@ import static android.view.KeyEvent.ACTION_UP;
 import static com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter.TRAP_STAR;
 
 public class TrapStarActivity extends AppCompatActivity{
-    public static int howManyClick;
+
     private RecyclerView buttonList;
     private GridLayoutManager gm;
     private ButtonResViewAdapter buttonsAdapter;
@@ -45,7 +45,6 @@ public class TrapStarActivity extends AppCompatActivity{
         setContentView(R.layout.activity_trap_star);
         getSupportActionBar().hide();
         Intent i = getIntent();
-        howManyClick = StarChooserActivity.howManyClick;
         trapStarName = i.getStringExtra(TRAP_STAR);
         setTitle(trapStarName);
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);

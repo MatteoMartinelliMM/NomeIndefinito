@@ -59,7 +59,7 @@ public class StarChooserAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        View view = layoutInflater.inflate(R.layout.card_item, container, false);
+        View view = layoutInflater.inflate(R.layout.trapstar_element, container, false);
         final ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
         final TextView textView = (TextView) view.findViewById(R.id.textView);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
