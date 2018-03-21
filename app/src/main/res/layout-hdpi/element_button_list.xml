@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/homeBg"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/buttonElement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/homeBg"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/homeBg"
+
+            >
+
+            <ImageButton
+                android:id="@+id/soundAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/homeBg"
+                app:srcCompat="@drawable/codeine_button_img" />
+
+            <TextView
+                android:id="@+id/buttonLabel"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/soundAction"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@color/logoColor"
+                android:maxEms="16"
+                android:singleLine="false"
+                android:text="esghere"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

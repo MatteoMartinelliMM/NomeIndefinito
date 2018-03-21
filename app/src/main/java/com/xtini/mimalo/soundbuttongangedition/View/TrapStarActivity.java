@@ -76,26 +76,7 @@ public class TrapStarActivity extends AppCompatActivity{
             MediaPlayerRegistry.closePlayers(this);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case ACTION_DOWN:
-                x1 = event.getX();
-                y1 = event.getY();
-                break;
-            case ACTION_UP:
-                x2 = event.getX();
-                y2 = event.getY();
-                float deltaY = Math.abs(y2 - y1);
-                float deltaX = Math.abs(x2 - x1);
-                if (deltaX > MIN_DISTANCE && deltaY < MIN_DISTANCE) {
-                    if (x1 > x2)
-                        onBackPressed();
-                }
 
-        }
-        return super.onTouchEvent(event);
-    }
 
 
     @Override
