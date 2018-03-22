@@ -14,6 +14,8 @@ import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+// per adMob
+import com.google.android.gms.ads.MobileAds;
 
 
 /**
@@ -35,7 +37,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         trapStars = new ArrayList<>();
         ArrayList<AudioFile> trapStarsAudio = new ArrayList<>();
-
         try {
             String[] artistsFolder = getAssets().list(TRAP_SB_DATA);
             int howManyArtist = artistsFolder.length;
@@ -82,5 +83,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 
 }

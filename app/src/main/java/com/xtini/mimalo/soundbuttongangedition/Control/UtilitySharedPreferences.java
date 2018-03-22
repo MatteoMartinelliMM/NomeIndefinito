@@ -12,7 +12,18 @@ public class UtilitySharedPreferences {
 
     public static final String FIRST_ACCESS = "FirstAccess";
 
+    //salvo nelle shared nome appena faccio click
+    public static void saveClickedArtistName(Context context , String trapStarName){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("ClickedArtist",trapStarName);
+        editor.commit();
+    }
 
+    public static String getClickedArtistName(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("ClickedArtist","");
+    }
 
     public static boolean artistIsUnlocked(Context context, String trapStarname) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

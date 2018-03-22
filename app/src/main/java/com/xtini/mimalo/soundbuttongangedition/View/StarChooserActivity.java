@@ -15,14 +15,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.xtini.mimalo.soundbuttongangedition.Control.ShowExplainDialog;
 import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
+import com.xtini.mimalo.soundbuttongangedition.Control.UtilitySharedPreferences;
 import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
@@ -31,8 +35,13 @@ import java.util.ArrayList;
 import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.FIRS_ACCESS;
 import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.TONY_EFFE;
 
+// import aggiunti per video AdMob
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 
-public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog {
+//aggiungo interfaccia RewardedVideoAdListener per reward
+public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog, RewardedVideoAdListener {
 
 
     NavigationView navigationView;
@@ -48,6 +57,14 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private AlertDialog alert;
     private ShowExplainDialog showExplainDialog;
 
+    //Variabile per caricamento videoAd
+    //TODO VANNO USATI AdMobPubId e AppId , quelli usati ora sono per test
+    private RewardedVideoAd rewardedVideoAd;
+    private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
+    private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
+    String testPub = "ca-app-pub-3940256099942544/5224354917";
+
+    String testId = "ca-app-pub-3940256099942544~3347511713";
     // onCreate + relative Method called in
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +79,20 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         showExplainDialog = this;
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
-
-
-
         setDrawerMenu(toolbar);
+
+        //ca-app-pub-7408325265716426~9273012450
+
+        //for test
+        //MobileAds.initialize(this, AdMobAppId);
+        MobileAds.initialize(this, testId);
+
+        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        rewardedVideoAd.setRewardedVideoAdListener(this);
+        //for test
+
+        //rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
+        rewardedVideoAd.loadAd(testPub, new AdRequest.Builder().build());
     }
 
     private void setDrawerMenu(Toolbar toolbar) {
@@ -207,15 +234,76 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
     @Override
     public void showExplainDialog() {
+        //creo un alert dialog con due opzioni ok cancel
         builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme)
-                .setMessage("Inserire un messaggio di spiegazione all'utente").setNeutralButton("Capito", new DialogInterface.OnClickListener() {
+                .setMessage("Vuoi sbloccare questo artista guardando un video pubblicità ?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        isFirstAccess = false;
-                        dialog.dismiss();
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (rewardedVideoAd.isLoaded()) {
+                            rewardedVideoAd.show();
+                            rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
+                        }
+                    }
+                }).setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
                     }
                 });
+
         alert = builder.create();
         alert.show();
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        Log.d("An ad has Loaded", "AdMob");
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+        Log.d("An ad has Opened", "AdMob");
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+        Log.d("An ad has Started", "AdMob");
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        Log.d("An ad has Closed", "AdMob");
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+        Log.d("Reward received " + rewardItem.getType(), "AdMob");
+        Toast.makeText(this, "Hai appena sbloccato un artista , grazie del supporto ! Clicca ancora per sbloccarlo", Toast.LENGTH_LONG).show();
+
+        String clickedArtist = UtilitySharedPreferences.getClickedArtistName(this);
+         //Sblocco l'artista che ho cliccato dopo il reward ( DOVREI AGGIORNARE ORA LA CAROSEL )
+        UtilitySharedPreferences.lockOrUnlockArtist(this, clickedArtist, true);
+        //TODO dovrei aggiornare la carosel ora per evitare un altro click dell'utente
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+        Log.d("Video Left Application", "AdMob");
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        Log.d("An ad has FailedToLoad", "AdMob");
+
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+        Log.d("An ad has Loaded", "AdMob");
+
     }
 }

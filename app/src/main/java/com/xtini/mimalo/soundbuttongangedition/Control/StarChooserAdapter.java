@@ -22,6 +22,7 @@ import com.xtini.mimalo.soundbuttongangedition.View.TrapStarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by matteoma on 2/3/2018.
  */
@@ -38,6 +39,7 @@ public class StarChooserAdapter extends PagerAdapter {
     private TextView artistName;
     private StarChooserActivity starChooserActivity;
     private ShowExplainDialog showExplainDialog;
+
 
     public StarChooserAdapter(List<TrapStar> trapStars, Context context, StarChooserActivity starChooserActivity, ShowExplainDialog showExplainDialog) {
         this.trapStars = trapStars;
@@ -87,17 +89,16 @@ public class StarChooserAdapter extends PagerAdapter {
         artistPicture.setImageResource(id);
         artistName.setBackgroundResource(R.color.disabledTextView);
         artistName.setTextColor(context.getResources().getColor(R.color.disabledTextColor));
+
         artistPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //VIDEO
-                if (StarChooserActivity.isFirstAccess) {
+                //Se l'artista non  è sbloccato mostro il dialogo e salvo chi ho cliccato
+                if (!UtilitySharedPreferences.artistIsUnlocked(view.getContext(), trapStars.get(position).getTrapStarName())) {
                     showExplainDialog.showExplainDialog();
-                } else {
-                    Toast.makeText(view.getContext(), "VIDEOOOO", Toast.LENGTH_SHORT).show();
-                    UtilitySharedPreferences.lockOrUnlockArtist(view.getContext(), trapStars.get(position).getTrapStarName(), true);
-                    starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
+                    UtilitySharedPreferences.saveClickedArtistName(view.getContext(), trapStars.get(position).getTrapStarName());
                 }
+                starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
             }
         });
     }
