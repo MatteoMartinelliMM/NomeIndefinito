@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "757654186685",
+    "firebase_url": "https://trapsoundboard777.firebaseio.com",
+    "project_id": "trapsoundboard777",
+    "storage_bucket": "trapsoundboard777.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757654186685:android:ae08646d920cb6b3",
+        "android_client_info": {
+          "package_name": "com.xtini.mimalo.soundbuttongangedition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757654186685-pqeaaeohlmnv3i1pfsid8ntrgp6lgcio.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xtini.mimalo.soundbuttongangedition",
+            "certificate_hash": "45ebe7d88836509fc14243c1ae95fad6f3a56da3"
+          }
+        },
+        {
+          "client_id": "757654186685-ag6919r072h44jopl1l1vjdd06oann7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmc9EPTaugfAFGEKblPed6I_V5GmqGB5E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757654186685-ag6919r072h44jopl1l1vjdd06oann7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
