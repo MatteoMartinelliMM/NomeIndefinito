@@ -67,12 +67,12 @@ public class StarChooserAdapter extends PagerAdapter {
         textView = view.findViewById(R.id.textView);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         textView.setTypeface(typeface);
-        boolean artistIsUnlocked = UtilitySharedPreferences.artistIsUnlocked(container.getContext(),trapStars.get(position).getTrapStarName());
+        boolean artistIsUnlocked = UtilitySharedPreferences.artistIsUnlocked(container.getContext(), trapStars.get(position).getTrapStarName());
         int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase(), "drawable", context.getPackageName());
         imageView.setImageResource(id);
         container.addView(view);
         textView.setText(" " + trapStars.get(position).getTrapStarName() + " ");
-        if(artistIsUnlocked) {
+        if (artistIsUnlocked) {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,7 +83,7 @@ public class StarChooserAdapter extends PagerAdapter {
                     temp.startActivity(intent);
                 }
             });
-        }else{
+        } else {
             imageView.setAlpha(0.5f);
             textView.setAlpha(0.5f);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +91,8 @@ public class StarChooserAdapter extends PagerAdapter {
                 public void onClick(View view) {
                     //VIDEO
                     Toast.makeText(view.getContext(), "VIDEOOOO", Toast.LENGTH_SHORT).show();
-                    UtilitySharedPreferences.lockOrUnlockArtist(view.getContext(),trapStars.get(position).getTrapStarName(),true );
-                    starChooserActivity.reloadTheCarusel();
+                    UtilitySharedPreferences.lockOrUnlockArtist(view.getContext(), trapStars.get(position).getTrapStarName(), true);
+                    starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
                 }
             });
         }

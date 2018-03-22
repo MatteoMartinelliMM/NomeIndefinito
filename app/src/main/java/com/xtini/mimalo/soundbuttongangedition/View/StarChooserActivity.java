@@ -21,6 +21,9 @@ import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
 
+import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.FIRST_ACCESS;
+import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.SFERA_EBBASTA;
+
 
 public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,18 +34,22 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private DrawerLayout drawer;
     private ArrayList<TrapStar> trapStars;
 
+
+    // onCreate + relative Method called in
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_chooser);
-        setTitle("Trap Soundboard");
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        Toolbar toolbar = setActionBar();
 
         trapStars = SplashScreenActivity.trapStars;
+        setTheCarusel(SFERA_EBBASTA);
 
-        setTheCarusel();
+        setDrawerMenu(toolbar);
+    }
 
+    private void setDrawerMenu(Toolbar toolbar) {
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -53,21 +60,36 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void setTheCarusel() {
+    private Toolbar setActionBar() {
+        setTitle("Trap Soundboard");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        return toolbar;
+    }
+
+    private void setTheCarusel(String trapStarName) {
+        int index = getArtistIndex(trapStarName);
         HorizontalInfiniteCycleViewPager pager = findViewById(R.id.horizontal_cycle);
-        StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(),this);
+        StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(), this);
         pager.setAdapter(adapter);
+        pager.setCurrentItem(index,true);
     }
 
-    public void reloadTheCarusel() {
-        setTheCarusel();
+    public void reloadTheCarusel(String trapStarName) {
+        setTheCarusel(trapStarName);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private int getArtistIndex(String artistName) { //RECUPERA INDICE DI QUALE ARTISTA METTERE IN PRIMO PIANO
+        int index = 0;
+        for (int i = 0; i < trapStars.size(); i++)
+            if (trapStars.get(i).getTrapStarName().equals(artistName)) {
+                index = i;
+                break;
+            }
+        return index;
     }
 
+    // onBackPressed + relative method called in
     @Override
     public void onBackPressed() {
 
@@ -78,10 +100,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
 
     private void doubleTapForCloseApp() {
@@ -103,6 +121,8 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         }, 2000);
     }
 
+
+    // navigationMenu + relative method called in
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

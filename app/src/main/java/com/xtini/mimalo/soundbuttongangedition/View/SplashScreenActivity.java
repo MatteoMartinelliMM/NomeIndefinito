@@ -22,6 +22,8 @@ import java.util.Arrays;
 
 public class SplashScreenActivity extends AppCompatActivity {
     public static final String TRAP_SB_DATA = "TrapSBData";
+    public static final String SFERA_EBBASTA = "SferaEbbasta";
+    public static final String FIRST_ACCESS = "FirstAccess";
     private String assetsPath = "///android_asset/TrapSBData/";
     public static ArrayList<TrapStar> trapStars;
 
@@ -35,8 +37,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             String[] artistsFolder = getAssets().list(TRAP_SB_DATA);
             int howManyArtist = artistsFolder.length;
             if (UtilitySharedPreferences.isTheFirstAccess(this)) { //SE USR FA PRIMO ACCESSO ALL APP -> NON PERMETTO ALL'USR DI ACCEDERE ALL'ACTIVITY DEI BOTTONI
-                for (int i = 0; i < howManyArtist; i++)
-                    UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], false);
+                for (int i = 0; i < howManyArtist; i++) {
+                    if (!artistsFolder[i].equalsIgnoreCase(SFERA_EBBASTA))
+                        UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], false);
+                    else
+                        UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], true);
+                }
             }
             for (int i = 0; i < howManyArtist; i++) {
                 ArrayList<String> artistFile = new ArrayList<>(Arrays.asList(getAssets().list("TrapSBData/" + artistsFolder[i])));
