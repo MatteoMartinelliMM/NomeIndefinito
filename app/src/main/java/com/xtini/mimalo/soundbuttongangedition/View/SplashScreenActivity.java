@@ -22,9 +22,12 @@ import java.util.Arrays;
 
 public class SplashScreenActivity extends AppCompatActivity {
     public static final String TRAP_SB_DATA = "TrapSBData";
-    public static final String SFERA_EBBASTA = "SferaEbbasta";
+
     public static final String FIRST_ACCESS = "FirstAccess";
+    public static final String TONY_EFFE = "TonyEffe";
+    public static final String FIRS_ACCESS = "FirsAccess";
     private String assetsPath = "///android_asset/TrapSBData/";
+    private boolean firstAccess = false;
     public static ArrayList<TrapStar> trapStars;
 
     @Override
@@ -38,11 +41,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             int howManyArtist = artistsFolder.length;
             if (UtilitySharedPreferences.isTheFirstAccess(this)) { //SE USR FA PRIMO ACCESSO ALL APP -> NON PERMETTO ALL'USR DI ACCEDERE ALL'ACTIVITY DEI BOTTONI
                 for (int i = 0; i < howManyArtist; i++) {
-                    if (!artistsFolder[i].equalsIgnoreCase(SFERA_EBBASTA))
+                    if (!artistsFolder[i].equalsIgnoreCase(TONY_EFFE))
                         UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], false);
                     else
                         UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], true);
                 }
+                firstAccess = true;
             }
             for (int i = 0; i < howManyArtist; i++) {
                 ArrayList<String> artistFile = new ArrayList<>(Arrays.asList(getAssets().list("TrapSBData/" + artistsFolder[i])));
@@ -74,6 +78,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void updateUi() {
         Intent intent = new Intent(this, StarChooserActivity.class);
+        intent.putExtra(FIRS_ACCESS,firstAccess);
         startActivity(intent);
         finish();
     }

@@ -7,4 +7,5 @@
     <color name="homeBg">#FCFBE3</color>
     <color name="disabledTextView">#9e9e9e</color>
     <color name="disabledTextColor">#e0e0e0</color>
+    <color name="BLACK">#000</color>
 </resources>

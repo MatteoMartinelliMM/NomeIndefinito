@@ -1,6 +1,10 @@
 package com.xtini.mimalo.soundbuttongangedition.View;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,20 +16,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.xtini.mimalo.soundbuttongangedition.Control.ShowExplainDialog;
 import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
 import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
 import com.xtini.mimalo.soundbuttongangedition.R;
 
 import java.util.ArrayList;
 
-import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.FIRST_ACCESS;
-import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.SFERA_EBBASTA;
+import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.FIRS_ACCESS;
+import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.TONY_EFFE;
 
 
-public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog {
 
 
     NavigationView navigationView;
@@ -33,7 +40,13 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private Toast toast;
     private DrawerLayout drawer;
     private ArrayList<TrapStar> trapStars;
-
+    public static boolean isFirstAccess;
+    private int index;
+    private HorizontalInfiniteCycleViewPager pager;
+    private Context context;
+    private AlertDialog.Builder builder;
+    private AlertDialog alert;
+    private ShowExplainDialog showExplainDialog;
 
     // onCreate + relative Method called in
     @Override
@@ -43,8 +56,14 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
         Toolbar toolbar = setActionBar();
 
+        context = this;
+        Intent intent = getIntent();
+        isFirstAccess = intent.getBooleanExtra(FIRS_ACCESS, false);
+        showExplainDialog = this;
         trapStars = SplashScreenActivity.trapStars;
-        setTheCarusel(SFERA_EBBASTA);
+        setTheCarusel(TONY_EFFE);
+
+
 
         setDrawerMenu(toolbar);
     }
@@ -68,12 +87,13 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     }
 
     private void setTheCarusel(String trapStarName) {
-        int index = getArtistIndex(trapStarName);
-        HorizontalInfiniteCycleViewPager pager = findViewById(R.id.horizontal_cycle);
-        StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(), this);
+        index = getArtistIndex(trapStarName);
+        pager = findViewById(R.id.horizontal_cycle);
+        StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(), this, showExplainDialog);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(index,true);
+        pager.setCurrentItem(index, true);
     }
+
 
     public void reloadTheCarusel(String trapStarName) {
         setTheCarusel(trapStarName);
@@ -99,7 +119,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             doubleTapForCloseApp();
         }
     }
-
 
 
     private void doubleTapForCloseApp() {
@@ -186,4 +205,17 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         startActivity(Intent.createChooser(sendIntent, "Suggeriscici un suono"));
     }
 
+    @Override
+    public void showExplainDialog() {
+        builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme)
+                .setMessage("Inserire un messaggio di spiegazione all'utente").setNeutralButton("Capito", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        isFirstAccess = false;
+                        dialog.dismiss();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
+    }
 }

@@ -36,8 +36,7 @@ public class TrapStarActivity extends AppCompatActivity{
     private RelativeLayout parentLayout;
     private boolean playerIsReleased = false;
     private AudioManager audio;
-    private float x1,y1,x2,y2;
-    private final float MIN_DISTANCE = 150;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,6 @@ public class TrapStarActivity extends AppCompatActivity{
         getSupportActionBar().hide();
         Intent i = getIntent();
         trapStarName = i.getStringExtra(TRAP_STAR);
-        setTitle(trapStarName);
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioFiles = StarChooserAdapter.audioFiles;
         parentLayout = findViewById(R.id.parentLayout);

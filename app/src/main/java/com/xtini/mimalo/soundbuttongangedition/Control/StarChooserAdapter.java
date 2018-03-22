@@ -1,6 +1,8 @@
 package com.xtini.mimalo.soundbuttongangedition.Control;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
@@ -35,12 +37,14 @@ public class StarChooserAdapter extends PagerAdapter {
     private ImageView artistPicture;
     private TextView artistName;
     private StarChooserActivity starChooserActivity;
+    private ShowExplainDialog showExplainDialog;
 
-    public StarChooserAdapter(List<TrapStar> trapStars, Context context, StarChooserActivity starChooserActivity) {
+    public StarChooserAdapter(List<TrapStar> trapStars, Context context, StarChooserActivity starChooserActivity, ShowExplainDialog showExplainDialog) {
         this.trapStars = trapStars;
         this.starChooserActivity = starChooserActivity;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
+        this.showExplainDialog = showExplainDialog;
     }
 
     @Override
@@ -79,7 +83,7 @@ public class StarChooserAdapter extends PagerAdapter {
     }
 
     private void lockedArtistActions(final int position) {
-        int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase()+ LOCKED, "drawable", context.getPackageName());
+        int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase() + LOCKED, "drawable", context.getPackageName());
         artistPicture.setImageResource(id);
         artistName.setBackgroundResource(R.color.disabledTextView);
         artistName.setTextColor(context.getResources().getColor(R.color.disabledTextColor));
@@ -87,9 +91,13 @@ public class StarChooserAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 //VIDEO
-                Toast.makeText(view.getContext(), "VIDEOOOO", Toast.LENGTH_SHORT).show();
-                UtilitySharedPreferences.lockOrUnlockArtist(view.getContext(), trapStars.get(position).getTrapStarName(), true);
-                starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
+                if (StarChooserActivity.isFirstAccess) {
+                    showExplainDialog.showExplainDialog();
+                } else {
+                    Toast.makeText(view.getContext(), "VIDEOOOO", Toast.LENGTH_SHORT).show();
+                    UtilitySharedPreferences.lockOrUnlockArtist(view.getContext(), trapStars.get(position).getTrapStarName(), true);
+                    starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
+                }
             }
         });
     }
@@ -108,4 +116,5 @@ public class StarChooserAdapter extends PagerAdapter {
             }
         });
     }
+
 }
