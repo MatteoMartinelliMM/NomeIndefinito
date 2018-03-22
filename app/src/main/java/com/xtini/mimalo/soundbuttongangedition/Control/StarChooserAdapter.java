@@ -1,6 +1,5 @@
 package com.xtini.mimalo.soundbuttongangedition.Control;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -28,13 +27,13 @@ import java.util.List;
 public class StarChooserAdapter extends PagerAdapter {
 
     public static final String TRAP_STAR = "TrapStar";
+    public static final String LOCKED = "_locked";
     public static ArrayList<AudioFile> audioFiles;
     List<TrapStar> trapStars;
     Context context;
     LayoutInflater layoutInflater;
-    private String bo;
-    private ImageView imageView;
-    private TextView textView;
+    private ImageView artistPicture;
+    private TextView artistName;
     private StarChooserActivity starChooserActivity;
 
     public StarChooserAdapter(List<TrapStar> trapStars, Context context, StarChooserActivity starChooserActivity) {
@@ -63,39 +62,50 @@ public class StarChooserAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View view = layoutInflater.inflate(R.layout.trapstar_element, container, false);
-        imageView = view.findViewById(R.id.imageView);
-        textView = view.findViewById(R.id.textView);
+        artistPicture = view.findViewById(R.id.imageView);
+        artistName = view.findViewById(R.id.textView);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
-        textView.setTypeface(typeface);
+        artistName.setTypeface(typeface);
         boolean artistIsUnlocked = UtilitySharedPreferences.artistIsUnlocked(container.getContext(), trapStars.get(position).getTrapStarName());
-        int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase(), "drawable", context.getPackageName());
-        imageView.setImageResource(id);
         container.addView(view);
-        textView.setText(" " + trapStars.get(position).getTrapStarName() + " ");
+        artistName.setText(" " + trapStars.get(position).getTrapStarName() + " ");
+
         if (artistIsUnlocked) {
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    audioFiles = trapStars.get(position).getFileNames();
-                    StarChooserActivity temp = (StarChooserActivity) v.getContext();
-                    Intent intent = new Intent(temp, TrapStarActivity.class);
-                    intent.putExtra(TRAP_STAR, textView.getText());
-                    temp.startActivity(intent);
-                }
-            });
+            unlockedArtistActions(position);
         } else {
-            imageView.setAlpha(0.5f);
-            textView.setAlpha(0.5f);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //VIDEO
-                    Toast.makeText(view.getContext(), "VIDEOOOO", Toast.LENGTH_SHORT).show();
-                    UtilitySharedPreferences.lockOrUnlockArtist(view.getContext(), trapStars.get(position).getTrapStarName(), true);
-                    starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
-                }
-            });
+            lockedArtistActions(position);
         }
         return view;
+    }
+
+    private void lockedArtistActions(final int position) {
+        int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase()+ LOCKED, "drawable", context.getPackageName());
+        artistPicture.setImageResource(id);
+        artistName.setBackgroundResource(R.color.disabledTextView);
+        artistName.setTextColor(context.getResources().getColor(R.color.disabledTextColor));
+        artistPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //VIDEO
+                Toast.makeText(view.getContext(), "VIDEOOOO", Toast.LENGTH_SHORT).show();
+                UtilitySharedPreferences.lockOrUnlockArtist(view.getContext(), trapStars.get(position).getTrapStarName(), true);
+                starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
+            }
+        });
+    }
+
+    private void unlockedArtistActions(final int position) {
+        int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase(), "drawable", context.getPackageName());
+        artistPicture.setImageResource(id);
+        artistPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                audioFiles = trapStars.get(position).getFileNames();
+                StarChooserActivity temp = (StarChooserActivity) v.getContext();
+                Intent intent = new Intent(temp, TrapStarActivity.class);
+                intent.putExtra(TRAP_STAR, artistName.getText());
+                temp.startActivity(intent);
+            }
+        });
     }
 }
