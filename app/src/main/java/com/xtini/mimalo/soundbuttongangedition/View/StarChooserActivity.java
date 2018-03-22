@@ -29,6 +29,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private boolean doubleBackToExitPressedOnce = false;
     private Toast toast;
     private DrawerLayout drawer;
+    private ArrayList<TrapStar> trapStars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +39,9 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ArrayList<TrapStar> trapStars = SplashScreenActivity.trapStars;
+        trapStars = SplashScreenActivity.trapStars;
 
-        setTheCarusel(trapStars);
+        setTheCarusel();
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,10 +53,14 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void setTheCarusel(ArrayList<TrapStar> trapStars) {
+    private void setTheCarusel() {
         HorizontalInfiniteCycleViewPager pager = findViewById(R.id.horizontal_cycle);
-        StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext());
+        StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(),this);
         pager.setAdapter(adapter);
+    }
+
+    public void reloadTheCarusel() {
+        setTheCarusel();
     }
 
     @Override
@@ -77,7 +82,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     protected void onStop() {
         super.onStop();
     }
-
 
 
     private void doubleTapForCloseApp() {

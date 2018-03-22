@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+
+import com.xtini.mimalo.soundbuttongangedition.Control.UtilitySharedPreferences;
 import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
 import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
 
@@ -14,15 +16,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-
 /**
  * Created by Teo on 29/01/2018.
  */
 
 public class SplashScreenActivity extends AppCompatActivity {
+    public static final String TRAP_SB_DATA = "TrapSBData";
     private String assetsPath = "///android_asset/TrapSBData/";
     public static ArrayList<TrapStar> trapStars;
-    private int numberOfClick;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,8 +32,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         ArrayList<AudioFile> trapStarsAudio = new ArrayList<>();
 
         try {
-            String[] artistsFolder = getAssets().list("TrapSBData");
+            String[] artistsFolder = getAssets().list(TRAP_SB_DATA);
             int howManyArtist = artistsFolder.length;
+            if (UtilitySharedPreferences.isTheFirstAccess(this)) { //SE USR FA PRIMO ACCESSO ALL APP -> NON PERMETTO ALL'USR DI ACCEDERE ALL'ACTIVITY DEI BOTTONI
+                for (int i = 0; i < howManyArtist; i++)
+                    UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], false);
+            }
             for (int i = 0; i < howManyArtist; i++) {
                 ArrayList<String> artistFile = new ArrayList<>(Arrays.asList(getAssets().list("TrapSBData/" + artistsFolder[i])));
                 TrapStar trapStar = new TrapStar();
@@ -57,10 +62,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        updateUi();
 
+    }
+
+    private void updateUi() {
         Intent intent = new Intent(this, StarChooserActivity.class);
         startActivity(intent);
-
         finish();
     }
+
 }
