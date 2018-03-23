@@ -11,18 +11,19 @@ import android.preference.PreferenceManager;
 public class UtilitySharedPreferences {
 
     public static final String FIRST_ACCESS = "FirstAccess";
+    public static final String CLICKED_ARTIST = "ClickedArtist";
 
     //salvo nelle shared nome appena faccio click
     public static void saveClickedArtistName(Context context , String trapStarName){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("ClickedArtist",trapStarName);
+        editor.putString(CLICKED_ARTIST,trapStarName);
         editor.commit();
     }
 
     public static String getClickedArtistName(Context context){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString("ClickedArtist","");
+        return preferences.getString(CLICKED_ARTIST,"");
     }
 
     public static boolean artistIsUnlocked(Context context, String trapStarname) {

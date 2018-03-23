@@ -74,9 +74,6 @@ public class TrapStarActivity extends AppCompatActivity{
             MediaPlayerRegistry.closePlayers(this);
     }
 
-
-
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
