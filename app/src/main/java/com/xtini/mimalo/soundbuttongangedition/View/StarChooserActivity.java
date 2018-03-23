@@ -79,7 +79,8 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
         setDrawerMenu(toolbar);
-       }
+
+        }
 
     @Override
     protected void onStart() {
@@ -106,20 +107,20 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             @Override
             public void onRewardedVideoAdClosed() {
                 Log.d("An ad has Closed", "AdMob");
+                rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
+                rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
             }
 
             @Override
             public void onRewarded(RewardItem rewardItem) {
 
                 Log.d("Reward received " + rewardItem.getType(), "AdMob");
-                Toast.makeText(context, "Hai appena sbloccato un artista , grazie del supporto ! Clicca ancora per sbloccarlo", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Hai appena sbloccato un artista , grazie del supporto ! ", Toast.LENGTH_LONG).show();
 
                 String clickedArtist = UtilitySharedPreferences.getClickedArtistName(context);
-                //Sblocco l'artista che ho cliccato dopo il reward ( DOVREI AGGIORNARE ORA LA CAROSEL )
                 UtilitySharedPreferences.lockOrUnlockArtist(context, clickedArtist, true);
-                //TODO dovrei aggiornare la carosel ora per evitare un altro click dell'utente
                 reloadTheCarusel(UtilitySharedPreferences.getClickedArtistName(context));
-                //rewardedVideoAd.destroy(context);
+
 
                 rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
                 rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
@@ -144,7 +145,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             }
         });
         //for test
-
         rewardedVideoAd.loadAd(testPub, new AdRequest.Builder().build());
     }
 
@@ -298,6 +298,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                             //MobileAds.initialize(this, testId);
                         }else{
                             Toast.makeText(context,"Problemi di caricamento con il video, riprova più tardi", Toast.LENGTH_LONG).show();
+                            MobileAds.initialize(context, testId);
                             rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
                             rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
                         }
