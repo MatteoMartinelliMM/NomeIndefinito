@@ -1,7 +1,6 @@
 package com.xtini.mimalo.soundbuttongangedition.View;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,8 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
@@ -49,7 +46,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private Toast toast;
     private DrawerLayout drawer;
     private ArrayList<TrapStar> trapStars;
-    public static boolean isFirstAccess;
     private int index;
     private HorizontalInfiniteCycleViewPager pager;
     private Context context;
@@ -58,7 +54,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private ShowExplainDialog showExplainDialog;
 
     //Variabile per caricamento videoAd
-    //TODO VANNO USATI AdMobPubId e AppId , quelli usati ora sono per test
+    //TODO VANNO USATI AdMobPubId e AppId , quelli usati ora sono per test (TEO: NB: sarebbe best practice tenere i due id in string xml invcandoli con R.strging.*)
     private RewardedVideoAd rewardedVideoAd;
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
     private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
@@ -75,7 +71,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
         context = this;
         Intent intent = getIntent();
-        isFirstAccess = intent.getBooleanExtra(FIRS_ACCESS, false);
         showExplainDialog = this;
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
@@ -212,7 +207,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             String sAux = "\nSe non la scarichi sei solo uno stupido BUFU!\n";
             sAux = sAux + "https://play.google.com/store/apps/details?id=Orion.Soft \n\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
-            navigationView.getMenu().getItem(0).setChecked(false);
             startActivityForResult(Intent.createChooser(i, "Condividi CIUCCIONE!"), 0);
         } catch (Exception e) {
             //e.toString();
@@ -286,8 +280,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         String clickedArtist = UtilitySharedPreferences.getClickedArtistName(this);
          //Sblocco l'artista che ho cliccato dopo il reward ( DOVREI AGGIORNARE ORA LA CAROSEL )
         UtilitySharedPreferences.lockOrUnlockArtist(this, clickedArtist, true);
-        //TODO dovrei aggiornare la carosel ora per evitare un altro click dell'utente
-
+        reloadTheCarusel(clickedArtist);
     }
 
     @Override

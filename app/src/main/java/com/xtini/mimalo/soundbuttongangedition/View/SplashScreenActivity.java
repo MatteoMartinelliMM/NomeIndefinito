@@ -1,6 +1,12 @@
 package com.xtini.mimalo.soundbuttongangedition.View;
 
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +20,10 @@ import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-// per adMob
-import com.google.android.gms.ads.MobileAds;
+
+import com.xtini.mimalo.soundbuttongangedition.R;
+
+import org.jsoup.Jsoup;
 
 
 /**
@@ -31,50 +39,75 @@ public class SplashScreenActivity extends AppCompatActivity {
     private String assetsPath = "///android_asset/TrapSBData/";
     private boolean firstAccess = false;
     public static ArrayList<TrapStar> trapStars;
+    private AlertDialog alert;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         trapStars = new ArrayList<>();
         ArrayList<AudioFile> trapStarsAudio = new ArrayList<>();
-        try {
-            String[] artistsFolder = getAssets().list(TRAP_SB_DATA);
-            int howManyArtist = artistsFolder.length;
-            if (UtilitySharedPreferences.isTheFirstAccess(this)) { //SE USR FA PRIMO ACCESSO ALL APP -> NON PERMETTO ALL'USR DI ACCEDERE ALL'ACTIVITY DEI BOTTONI
-                for (int i = 0; i < howManyArtist; i++) {
-                    if (!artistsFolder[i].equalsIgnoreCase(TONY_EFFE))
-                        UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], false);
-                    else
-                        UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], true);
-                }
-                firstAccess = true;
-            }
-            for (int i = 0; i < howManyArtist; i++) {
-                ArrayList<String> artistFile = new ArrayList<>(Arrays.asList(getAssets().list("TrapSBData/" + artistsFolder[i])));
-                TrapStar trapStar = new TrapStar();
-                boolean firstFile = true;
-                for (String fileName : artistFile) {
-                    if (firstFile) {
-                        trapStar.setTrapStarName(artistsFolder[i]);
-                        firstFile = false;
+        if (web_update())
+            showUpdateDialog();
+        else {
+
+            try {
+                String[] artistsFolder = getAssets().list(TRAP_SB_DATA);
+                int howManyArtist = artistsFolder.length;
+                if (UtilitySharedPreferences.isTheFirstAccess(this)) { //SE USR FA PRIMO ACCESSO ALL APP -> NON PERMETTO ALL'USR DI ACCEDERE ALL'ACTIVITY DEI BOTTONI
+                    for (int i = 0; i < howManyArtist; i++) {
+                        if (!artistsFolder[i].equalsIgnoreCase(TONY_EFFE))
+                            UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], false);
+                        else
+                            UtilitySharedPreferences.lockOrUnlockArtist(this, artistsFolder[i], true);
                     }
-                    AssetFileDescriptor assetFileDescriptor = getAssets().openFd("TrapSBData/" + artistsFolder[i] + "/" + fileName);
-                    AudioFile fileAudio = new AudioFile();
-                    fileAudio.setFileName(fileName);
-                    fileAudio.setSound(assetFileDescriptor);
-                    trapStarsAudio.add(fileAudio);
-
+                    firstAccess = true;
                 }
-                trapStar.setFileNames(trapStarsAudio);
-                trapStarsAudio = new ArrayList<>();
-                trapStars.add(trapStar);
+                for (int i = 0; i < howManyArtist; i++) {
+                    ArrayList<String> artistFile = new ArrayList<>(Arrays.asList(getAssets().list("TrapSBData/" + artistsFolder[i])));
+                    TrapStar trapStar = new TrapStar();
+                    boolean firstFile = true;
+                    for (String fileName : artistFile) {
+                        if (firstFile) {
+                            trapStar.setTrapStarName(artistsFolder[i]);
+                            firstFile = false;
+                        }
+                        AssetFileDescriptor assetFileDescriptor = getAssets().openFd("TrapSBData/" + artistsFolder[i] + "/" + fileName);
+                        AudioFile fileAudio = new AudioFile();
+                        fileAudio.setFileName(fileName);
+                        fileAudio.setSound(assetFileDescriptor);
+                        trapStarsAudio.add(fileAudio);
+
+                    }
+                    trapStar.setFileNames(trapStarsAudio);
+                    trapStarsAudio = new ArrayList<>();
+                    trapStars.add(trapStar);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            updateUi();
         }
-        updateUi();
+    }
 
+    private void showUpdateDialog() {
+        builder = new android.app.AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                .setMessage("E' uscita una nuova versione vuoi aggiornare ?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SplashScreenActivity splashScreenActivity = (SplashScreenActivity) dialogInterface;
+                        splashScreenActivity.finish();
+                    }
+                });
+
+        alert = builder.create();
+        alert.show();
     }
 
     private void updateUi() {
@@ -84,6 +117,23 @@ public class SplashScreenActivity extends AppCompatActivity {
         finish();
     }
 
-
+    private boolean web_update(){
+        try {
+            String curVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            String newVersion = curVersion;
+            newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName() + "&hl=en")
+                    .timeout(30000)
+                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                    .referrer("http://www.google.com")
+                    .get()
+                    .select("div[itemprop=softwareVersion]")
+                    .first()
+                    .ownText();
+            return (Float.valueOf(curVersion) < Float.valueOf(newVersion));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }
