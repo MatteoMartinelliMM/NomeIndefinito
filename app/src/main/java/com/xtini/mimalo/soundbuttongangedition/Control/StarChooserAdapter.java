@@ -98,7 +98,7 @@ public class StarChooserAdapter extends PagerAdapter {
                     showExplainDialog.showExplainDialog();
                     UtilitySharedPreferences.saveClickedArtistName(view.getContext(), trapStars.get(position).getTrapStarName());
                 }
-                starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
+                //starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
             }
         });
     }

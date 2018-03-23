@@ -41,7 +41,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 
 //aggiungo interfaccia RewardedVideoAdListener per reward
-public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog, RewardedVideoAdListener {
+public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog{
 
 
     NavigationView navigationView;
@@ -57,15 +57,14 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private AlertDialog alert;
     private ShowExplainDialog showExplainDialog;
 
-    //Variabile per caricamento videoAd
+        //Variabile per caricamento videoAd
     //TODO VANNO USATI AdMobPubId e AppId , quelli usati ora sono per test
     private RewardedVideoAd rewardedVideoAd;
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
     private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
     String testPub = "ca-app-pub-3940256099942544/5224354917";
-
     String testId = "ca-app-pub-3940256099942544~3347511713";
-    // onCreate + relative Method called in
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,18 +79,72 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
         setDrawerMenu(toolbar);
+       }
 
-        //ca-app-pub-7408325265716426~9273012450
-
-        //for test
-        //MobileAds.initialize(this, AdMobAppId);
+    @Override
+    protected void onStart() {
+        super.onStart();
         MobileAds.initialize(this, testId);
-
         rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-        rewardedVideoAd.setRewardedVideoAdListener(this);
+        rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                Log.d("An ad has Loaded", "AdMob");
+            }
+
+            @Override
+            public void onRewardedVideoAdOpened() {
+                Log.d("An ad has Opened", "AdMob");
+
+            }
+
+            @Override
+            public void onRewardedVideoStarted() {
+                Log.d("An ad has Started", "AdMob");
+            }
+
+            @Override
+            public void onRewardedVideoAdClosed() {
+                Log.d("An ad has Closed", "AdMob");
+            }
+
+            @Override
+            public void onRewarded(RewardItem rewardItem) {
+
+                Log.d("Reward received " + rewardItem.getType(), "AdMob");
+                Toast.makeText(context, "Hai appena sbloccato un artista , grazie del supporto ! Clicca ancora per sbloccarlo", Toast.LENGTH_LONG).show();
+
+                String clickedArtist = UtilitySharedPreferences.getClickedArtistName(context);
+                //Sblocco l'artista che ho cliccato dopo il reward ( DOVREI AGGIORNARE ORA LA CAROSEL )
+                UtilitySharedPreferences.lockOrUnlockArtist(context, clickedArtist, true);
+                //TODO dovrei aggiornare la carosel ora per evitare un altro click dell'utente
+                reloadTheCarusel(UtilitySharedPreferences.getClickedArtistName(context));
+                //rewardedVideoAd.destroy(context);
+
+                rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
+                rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
+
+            }
+
+            @Override
+            public void onRewardedVideoAdLeftApplication() {
+                Log.d("Video Left Application", "AdMob");
+            }
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int i) {
+                Log.d("An ad has FailedToLoad", "AdMob");
+
+            }
+
+            @Override
+            public void onRewardedVideoCompleted() {
+                Log.d("An ad has Loaded", "AdMob");
+
+            }
+        });
         //for test
 
-        //rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
         rewardedVideoAd.loadAd(testPub, new AdRequest.Builder().build());
     }
 
@@ -221,7 +274,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
     public void adviceSound() {
         String uriText =
-                "mailto:mimalo@gmail.com" +
+                "mailto:mimalogroup@gmail.com" +
                         "?subject=" + Uri.encode("Aggiunta suono") +
                         "&body=" + Uri.encode("Se non mettete questo suono siete solo degli stupidi bufetti.");
 
@@ -241,6 +294,11 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (rewardedVideoAd.isLoaded()) {
                             rewardedVideoAd.show();
+                            //rewardedVideoAd.destroy(context);
+                            //MobileAds.initialize(this, testId);
+                        }else{
+                            Toast.makeText(context,"Problemi di caricamento con il video, riprova più tardi", Toast.LENGTH_LONG).show();
+                            rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
                             rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
                         }
                     }
@@ -255,6 +313,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         alert.show();
 
     }
+    /*
 
     @Override
     public void onRewardedVideoAdLoaded() {
@@ -286,7 +345,11 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         String clickedArtist = UtilitySharedPreferences.getClickedArtistName(this);
          //Sblocco l'artista che ho cliccato dopo il reward ( DOVREI AGGIORNARE ORA LA CAROSEL )
         UtilitySharedPreferences.lockOrUnlockArtist(this, clickedArtist, true);
-        //TODO dovrei aggiornare la carosel ora per evitare un altro click dell'utente
+        reloadTheCarusel(UtilitySharedPreferences.getClickedArtistName(this));
+        //rewardedVideoAd.destroy(context);
+
+        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
+        rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
 
     }
 
@@ -305,5 +368,5 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     public void onRewardedVideoCompleted() {
         Log.d("An ad has Loaded", "AdMob");
 
-    }
+    }*/
 }
