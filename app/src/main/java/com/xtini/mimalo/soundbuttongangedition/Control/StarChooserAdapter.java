@@ -74,7 +74,7 @@ public class StarChooserAdapter extends PagerAdapter {
         artistName.setTypeface(typeface);
         boolean artistIsUnlocked = UtilitySharedPreferences.artistIsUnlocked(container.getContext(), trapStars.get(position).getTrapStarName());
         container.addView(view);
-        artistName.setText(" " + trapStars.get(position).getTrapStarName() + " ");
+
 
         if (artistIsUnlocked) {
             unlockedArtistActions(position);
@@ -85,6 +85,7 @@ public class StarChooserAdapter extends PagerAdapter {
     }
 
     private void lockedArtistActions(final int position) {
+        artistName.setText(" " + "??????"+ " ");
         int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase() + LOCKED, "drawable", context.getPackageName());
         artistPicture.setImageResource(id);
         artistName.setBackgroundResource(R.color.disabledTextView);
@@ -104,6 +105,7 @@ public class StarChooserAdapter extends PagerAdapter {
     }
 
     private void unlockedArtistActions(final int position) {
+        artistName.setText(" " + trapStars.get(position).getTrapStarName() + " ");
         int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase(), "drawable", context.getPackageName());
         artistPicture.setImageResource(id);
         artistPicture.setOnClickListener(new View.OnClickListener() {
