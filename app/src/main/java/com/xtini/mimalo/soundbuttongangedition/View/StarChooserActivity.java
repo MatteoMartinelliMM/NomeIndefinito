@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -44,6 +45,12 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog{
 
 
+    public static final String N_ALTRA_VOLTA = "N'altra volta";
+    public static final String COMPANY_MAIL = "mailto:mimalogroup@gmail.com";
+    public static final String SUBJECT = "?subject=";
+    public static final String BODY = "&body=";
+    public static final String SE_NON_METTETE_QUESTO_SUONO_SIETE_SOLO_DEGLI_STUPIDI_BUFETTI = "Se non mettete questo suono siete solo degli stupidi bufetti.";
+    public static final String AGGIUNTA_SUONO = "Aggiunta suono";
     NavigationView navigationView;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast toast;
@@ -114,13 +121,13 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             @Override
             public void onRewarded(RewardItem rewardItem) {
 
-                Log.d("Reward received " + rewardItem.getType(), "AdMob");
-                Toast.makeText(context, "Hai appena sbloccato un artista , grazie del supporto ! ", Toast.LENGTH_LONG).show();
-
                 String clickedArtist = UtilitySharedPreferences.getClickedArtistName(context);
                 UtilitySharedPreferences.lockOrUnlockArtist(context, clickedArtist, true);
                 reloadTheCarusel(UtilitySharedPreferences.getClickedArtistName(context));
 
+                Toast toast = ViewUtilities.createCustomToast(context, drawer ,"Hai appena sbloccato un artista , grazie del supporto ! ");
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.show();
 
                 rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
                 rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
@@ -203,12 +210,14 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
     private void doubleTapForCloseApp() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+
+            killTheAppByApiChooice();
+
             return;
         }
 
         this.doubleBackToExitPressedOnce = true;
-        toast = ViewUtilities.createCustomToast(this, drawer, "N'altra volta");
+        toast = ViewUtilities.createCustomToast(this, drawer, N_ALTRA_VOLTA);
         toast.show();
 
         new Handler().postDelayed(new Runnable() {
@@ -218,6 +227,15 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
+    }
+
+    private void killTheAppByApiChooice() {
+        if (Build.VERSION.SDK_INT >= 21){
+            finishAndRemoveTask();
+        } else{
+            finish();
+        }
+
     }
 
 
@@ -274,9 +292,9 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
     public void adviceSound() {
         String uriText =
-                "mailto:mimalogroup@gmail.com" +
-                        "?subject=" + Uri.encode("Aggiunta suono") +
-                        "&body=" + Uri.encode("Se non mettete questo suono siete solo degli stupidi bufetti.");
+                COMPANY_MAIL +
+                        SUBJECT + Uri.encode(AGGIUNTA_SUONO) +
+                        BODY + Uri.encode(SE_NON_METTETE_QUESTO_SUONO_SIETE_SOLO_DEGLI_STUPIDI_BUFETTI);
 
         Uri uri = Uri.parse(uriText);
 
@@ -289,7 +307,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     public void showExplainDialog() {
         //creo un alert dialog con due opzioni ok cancel
         builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme)
-                .setMessage("Vuoi sbloccare questo artista guardando un video pubblicità ?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setMessage("Vuoi sbloccare questo artista guardando un video pubblicità ?").setPositiveButton("Seeh", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (rewardedVideoAd.isLoaded()) {
@@ -297,13 +315,14 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                             //rewardedVideoAd.destroy(context);
                             //MobileAds.initialize(this, testId);
                         }else{
-                            Toast.makeText(context,"Problemi di caricamento con il video, riprova più tardi", Toast.LENGTH_LONG).show();
+                            Toast toast = ViewUtilities.createCustomToast(context, drawer,"Problemi di caricamento con il video, riprova più tardi");
+                            toast.show();
                             MobileAds.initialize(context, testId);
                             rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
                             rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
                         }
                     }
-                }).setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
