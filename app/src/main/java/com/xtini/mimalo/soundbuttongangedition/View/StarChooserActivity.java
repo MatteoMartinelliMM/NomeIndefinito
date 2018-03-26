@@ -266,7 +266,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
 
     public void rateUs() {
-        Uri uri = Uri.parse("market://details?id=" + "com.facebook.katana"/*getPackageName()*/);
+        Uri uri = Uri.parse("market://details?id=" + "com.facebook.katana"/*getPackageName()*/); //TODO: scommentare getPackageName()
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
             this.startActivity(myAppLinkToMarket);

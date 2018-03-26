@@ -2,15 +2,20 @@ package com.xtini.mimalo.soundbuttongangedition.View;
 
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 
 import com.xtini.mimalo.soundbuttongangedition.Control.UtilitySharedPreferences;
@@ -41,16 +46,17 @@ public class SplashScreenActivity extends AppCompatActivity {
     public static ArrayList<TrapStar> trapStars;
     private AlertDialog alert;
     private AlertDialog.Builder builder;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         trapStars = new ArrayList<>();
+        context = this;
         ArrayList<AudioFile> trapStarsAudio = new ArrayList<>();
-        if (web_update())
+        if (isNetworkAvailable() && web_update())
             showUpdateDialog();
         else {
-
             try {
                 String[] artistsFolder = getAssets().list(TRAP_SB_DATA);
                 int howManyArtist = artistsFolder.length;
@@ -89,16 +95,23 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
             updateUi();
         }
+
     }
 
     private void showUpdateDialog() {
-        builder = new android.app.AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                .setMessage("E' uscita una nuova versione vuoi aggiornare ?").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                .setMessage("E' uscita una nuova versione vuoi aggiornare ?").setPositiveButton("Seeh", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        Uri uri = Uri.parse("market://details?id=" + "com.facebook.katana"/*context.getPackageName()*/); //TODO: scommentare getPackageName()
+                        Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        try {
+                            context.startActivity(myAppLinkToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            Toast.makeText(context, " Sorry, Not able to open!", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }).setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("No!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         SplashScreenActivity splashScreenActivity = (SplashScreenActivity) dialogInterface;
@@ -112,12 +125,12 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void updateUi() {
         Intent intent = new Intent(this, StarChooserActivity.class);
-        intent.putExtra(FIRS_ACCESS,firstAccess);
+        intent.putExtra(FIRS_ACCESS, firstAccess);
         startActivity(intent);
         finish();
     }
 
-    private boolean web_update(){
+    private boolean web_update() {
         try {
             String curVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
             String newVersion = curVersion;
@@ -134,6 +147,13 @@ public class SplashScreenActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
