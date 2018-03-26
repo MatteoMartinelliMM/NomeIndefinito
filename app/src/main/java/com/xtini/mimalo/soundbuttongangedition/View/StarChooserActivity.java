@@ -64,13 +64,10 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private AlertDialog alert;
     private ShowExplainDialog showExplainDialog;
 
-        //Variabile per caricamento videoAd
-    //TODO VANNO USATI AdMobPubId e AppId , quelli usati ora sono per test
+    //Variabili per caricamento videoAd
     private RewardedVideoAd rewardedVideoAd;
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
     private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
-    String testPub = "ca-app-pub-3940256099942544/5224354917";
-    String testId = "ca-app-pub-3940256099942544~3347511713";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +89,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     @Override
     protected void onStart() {
         super.onStart();
-        MobileAds.initialize(this, testId);
+        MobileAds.initialize(this, AdMobAppId);
         rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
@@ -115,7 +112,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             public void onRewardedVideoAdClosed() {
                 Log.d("An ad has Closed", "AdMob");
                 rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-                rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
+                rewardedVideoAd.loadAd(AdMobAppId,new AdRequest.Builder().build());
             }
 
             @Override
@@ -130,7 +127,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                 toast.show();
 
                 rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-                rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
+                rewardedVideoAd.loadAd(AdMobPubId,new AdRequest.Builder().build());
 
             }
 
@@ -152,7 +149,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             }
         });
         //for test
-        rewardedVideoAd.loadAd(testPub, new AdRequest.Builder().build());
+        rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
     }
 
     private void setDrawerMenu(Toolbar toolbar) {
@@ -317,9 +314,9 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                         }else{
                             Toast toast = ViewUtilities.createCustomToast(context, drawer,"Problemi di caricamento con il video, riprova più tardi");
                             toast.show();
-                            MobileAds.initialize(context, testId);
+                            MobileAds.initialize(context, AdMobAppId);
                             rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-                            rewardedVideoAd.loadAd(testPub,new AdRequest.Builder().build());
+                            rewardedVideoAd.loadAd(AdMobPubId,new AdRequest.Builder().build());
                         }
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
