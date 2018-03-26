@@ -11,6 +11,10 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.xtini.mimalo.soundbuttongangedition.Control.ButtonResViewAdapter;
 import com.xtini.mimalo.soundbuttongangedition.Control.MediaPlayerRegistry;
 import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
@@ -36,7 +40,9 @@ public class TrapStarActivity extends AppCompatActivity{
     private RelativeLayout parentLayout;
     private boolean playerIsReleased = false;
     private AudioManager audio;
-
+    private String AdBannerId = "ca-app-pub-7408325265716426/2040619185";
+    private AdView AdBanner ;
+    private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,13 @@ public class TrapStarActivity extends AppCompatActivity{
         buttonsAdapter = new ButtonResViewAdapter(audioFiles,this, parentLayout);
         buttonList.setLayoutManager(gm);
         buttonList.setAdapter(buttonsAdapter);
+
+
+        MobileAds.initialize(this, AdMobAppId);
+        //Inizializzazione Banner in View
+        AdBanner = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        AdBanner.loadAd(adRequest);
     }
 
     @Override

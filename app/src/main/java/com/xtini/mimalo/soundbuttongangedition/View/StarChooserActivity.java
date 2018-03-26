@@ -41,8 +41,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 
-//aggiungo interfaccia RewardedVideoAdListener per reward
-public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog{
+public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog {
 
 
     public static final String N_ALTRA_VOLTA = "N'altra volta";
@@ -84,7 +83,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         setTheCarusel(TONY_EFFE);
         setDrawerMenu(toolbar);
 
-        }
+    }
 
     @Override
     protected void onStart() {
@@ -112,7 +111,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             public void onRewardedVideoAdClosed() {
                 Log.d("An ad has Closed", "AdMob");
                 rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-                rewardedVideoAd.loadAd(AdMobAppId,new AdRequest.Builder().build());
+                rewardedVideoAd.loadAd(AdMobAppId, new AdRequest.Builder().build());
             }
 
             @Override
@@ -122,12 +121,12 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                 UtilitySharedPreferences.lockOrUnlockArtist(context, clickedArtist, true);
                 reloadTheCarusel(UtilitySharedPreferences.getClickedArtistName(context));
 
-                Toast toast = ViewUtilities.createCustomToast(context, drawer ,"Hai appena sbloccato un artista , grazie del supporto ! ");
+                Toast toast = ViewUtilities.createCustomToast(context, drawer, "Hai appena sbloccato un artista , grazie del supporto ! ");
                 toast.setDuration(Toast.LENGTH_LONG);
                 toast.show();
 
                 rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-                rewardedVideoAd.loadAd(AdMobPubId,new AdRequest.Builder().build());
+                rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
 
             }
 
@@ -227,9 +226,9 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     }
 
     private void killTheAppByApiChooice() {
-        if (Build.VERSION.SDK_INT >= 21){
+        if (Build.VERSION.SDK_INT >= 21) {
             finishAndRemoveTask();
-        } else{
+        } else {
             finish();
         }
 
@@ -311,12 +310,12 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                             rewardedVideoAd.show();
                             //rewardedVideoAd.destroy(context);
                             //MobileAds.initialize(this, testId);
-                        }else{
-                            Toast toast = ViewUtilities.createCustomToast(context, drawer,"Problemi di caricamento con il video, riprova più tardi");
+                        } else {
+                            Toast toast = ViewUtilities.createCustomToast(context, drawer, "Problemi di caricamento con il video, riprova più tardi");
                             toast.show();
                             MobileAds.initialize(context, AdMobAppId);
                             rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-                            rewardedVideoAd.loadAd(AdMobPubId,new AdRequest.Builder().build());
+                            rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
                         }
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
