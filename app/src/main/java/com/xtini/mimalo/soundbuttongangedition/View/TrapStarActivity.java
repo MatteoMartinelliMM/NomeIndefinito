@@ -43,6 +43,7 @@ public class TrapStarActivity extends AppCompatActivity{
     private String AdBannerId = "ca-app-pub-7408325265716426/2040619185";
     private AdView AdBanner ;
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
+    private String adMobPubTest = "ca-app-pub-3940256099942544/6300978111";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class TrapStarActivity extends AppCompatActivity{
         buttonList.setAdapter(buttonsAdapter);
 
 
-        MobileAds.initialize(this, AdMobAppId);
+        MobileAds.initialize(this, adMobPubTest);
         //Inizializzazione Banner in View
         AdBanner = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();

@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
@@ -67,6 +68,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private RewardedVideoAd rewardedVideoAd;
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
     private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
+    private String adMobPubTest = "ca-app-pub-3940256099942544/6300978111";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,14 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_star_chooser);
 
         Toolbar toolbar = setActionBar();
-
+       /* Button button = findViewById(R.id.pigrizia);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UtilitySharedPreferences.clearAll(view.getContext());
+                finish();
+            }
+        });*/
         context = this;
         Intent intent = getIntent();
         isFirstAccess = intent.getBooleanExtra(FIRS_ACCESS, false);
@@ -116,7 +125,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
             @Override
             public void onRewarded(RewardItem rewardItem) {
-
+                rewardedVideoAd.setImmersiveMode(false);
                 String clickedArtist = UtilitySharedPreferences.getClickedArtistName(context);
                 UtilitySharedPreferences.lockOrUnlockArtist(context, clickedArtist, true);
                 reloadTheCarusel(UtilitySharedPreferences.getClickedArtistName(context));
@@ -307,6 +316,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (rewardedVideoAd.isLoaded()) {
+                            rewardedVideoAd.setImmersiveMode(true);
                             rewardedVideoAd.show();
                             //rewardedVideoAd.destroy(context);
                             //MobileAds.initialize(this, testId);

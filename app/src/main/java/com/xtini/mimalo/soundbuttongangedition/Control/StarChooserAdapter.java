@@ -94,12 +94,11 @@ public class StarChooserAdapter extends PagerAdapter {
         artistPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Se l'artista non  è sbloccato mostro il dialogo e salvo chi ho cliccato
+                //Se l'artista non  è sbloccato mostro il dialog e salvo chi ho cliccato
                 if (!UtilitySharedPreferences.artistIsUnlocked(view.getContext(), trapStars.get(position).getTrapStarName())) {
                     showExplainDialog.showExplainDialog();
                     UtilitySharedPreferences.saveClickedArtistName(view.getContext(), trapStars.get(position).getTrapStarName());
                 }
-                //starChooserActivity.reloadTheCarusel(trapStars.get(position).getTrapStarName());
             }
         });
     }

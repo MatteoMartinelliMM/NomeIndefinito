@@ -49,4 +49,11 @@ public class UtilitySharedPreferences {
             return true;
         }
     }
+
+    public static void clearAll(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+    }
 }
