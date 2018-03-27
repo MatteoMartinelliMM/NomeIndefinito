@@ -23,4 +23,5 @@
         app:headerLayout="@layout/nav_header_star_chooser"
         app:menu="@menu/activity_star_chooser_drawer" />
 
+
 </android.support.v4.widget.DrawerLayout>

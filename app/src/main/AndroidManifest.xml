@@ -26,8 +26,11 @@
         <activity
             android:name=".View.StarChooserActivity"
             android:label="@string/title_activity_star_chooser"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View.ChiSiamoActivity"></activity>
+        <activity android:name=".View.ChiSiamoActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>
