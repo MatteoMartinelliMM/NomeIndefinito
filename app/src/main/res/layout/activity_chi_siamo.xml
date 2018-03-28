@@ -16,4 +16,15 @@
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-7408325265716426/2040619185"></com.google.android.gms.ads.AdView>
 
+    <Button
+        android:id="@+id/licenza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="107dp"
+        android:onClick="showLicenzaDialog"
+        android:text="licenza" />
+
 </RelativeLayout>
