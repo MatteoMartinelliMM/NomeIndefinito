@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition;
+package com.xtini.mimalo.Trapsoundboard;
 
 import org.junit.Test;
 

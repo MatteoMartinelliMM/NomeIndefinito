@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition.Model;
+package com.xtini.mimalo.Trapsoundboard.Model;
 
 import android.content.res.AssetFileDescriptor;
 

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xtini.mimalo.soundbuttongangedition.View.ChiSiamoActivity"
-    android:background="@drawable/chisiamo_bg">
+    tools:context="com.xtini.mimalo.Trapsoundboard.View.ChiSiamoActivity"
+    android:background="@drawable/home_bg">
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -16,15 +16,45 @@
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-7408325265716426/2040619185"></com.google.android.gms.ads.AdView>
 
-    <Button
-        android:id="@+id/licenza"
+    <ImageView
+        android:id="@+id/img_termini"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/terimi_e_condizioni"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        app:srcCompat="@drawable/codeine_button_img_license" />
+
+    <TextView
+        android:id="@+id/terimi_e_condizioni"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="107dp"
-        android:onClick="showLicenzaDialog"
-        android:text="licenza" />
+        android:layout_above="@+id/adView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp"
+        android:background="@color/logoColor"
+        android:text="temini e condizioni"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/img_termini"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/mimalo_logo_prova" />
+
+    <TextView
+        android:id="@+id/contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView4"
+        android:layout_centerHorizontal="true"
+        android:background="@color/logoColor"
+        android:text="CONTACT: mimalogroup@gmail.com"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
 
 </RelativeLayout>

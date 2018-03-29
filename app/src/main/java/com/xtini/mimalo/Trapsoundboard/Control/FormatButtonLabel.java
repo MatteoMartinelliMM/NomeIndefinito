@@ -1,8 +1,6 @@
-package com.xtini.mimalo.soundbuttongangedition.Control;
+package com.xtini.mimalo.Trapsoundboard.Control;
 
-import com.xtini.mimalo.soundbuttongangedition.Model.BlankSpaces;
-
-import java.util.HashMap;
+import com.xtini.mimalo.Trapsoundboard.Model.BlankSpaces;
 
 /**
  * Created by matteoma on 3/16/2018.

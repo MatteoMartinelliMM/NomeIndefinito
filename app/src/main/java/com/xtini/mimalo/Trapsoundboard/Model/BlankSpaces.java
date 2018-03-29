@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition.Model;
+package com.xtini.mimalo.Trapsoundboard.Model;
 
 import java.util.HashMap;
 import java.util.Map;

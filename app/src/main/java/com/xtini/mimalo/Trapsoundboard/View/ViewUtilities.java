@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition.View;
+package com.xtini.mimalo.Trapsoundboard.View;
 
 import android.content.Context;
 import android.os.Build;
@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xtini.mimalo.soundbuttongangedition.R;
+import com.xtini.mimalo.Trapsoundboard.R;
 
-import static com.xtini.mimalo.soundbuttongangedition.View.StarChooserActivity.N_ALTRA_VOLTA;
 
 /**
  * Created by matteoma on 3/13/2018.

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xtini.mimalo.soundbuttongangedition">
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.xtini.mimalo.Trapsoundboard">
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
@@ -12,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".View.SplashScreenActivity"
+            android:name="com.xtini.mimalo.Trapsoundboard.View.SplashScreenActivity"
             android:theme="@style/LoadingTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,15 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.TrapStarActivity"
+        <activity android:name="com.xtini.mimalo.Trapsoundboard.View.TrapStarActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".View.StarChooserActivity"
+            android:name="com.xtini.mimalo.Trapsoundboard.View.StarChooserActivity"
             android:label="@string/title_activity_star_chooser"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View.ChiSiamoActivity"
+        <activity android:name="com.xtini.mimalo.Trapsoundboard.View.ChiSiamoActivity"
             android:screenOrientation="portrait"
             ></activity>
     </application>

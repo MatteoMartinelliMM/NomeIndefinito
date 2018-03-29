@@ -1,7 +1,6 @@
-package com.xtini.mimalo.soundbuttongangedition.View;
+package com.xtini.mimalo.Trapsoundboard.View;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,24 +17,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
-import com.xtini.mimalo.soundbuttongangedition.Control.ShowExplainDialog;
-import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
-import com.xtini.mimalo.soundbuttongangedition.Control.UtilitySharedPreferences;
-import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
-import com.xtini.mimalo.soundbuttongangedition.R;
+import com.xtini.mimalo.Trapsoundboard.Control.ShowExplainDialog;
+import com.xtini.mimalo.Trapsoundboard.Control.StarChooserAdapter;
+import com.xtini.mimalo.Trapsoundboard.Control.UtilitySharedPreferences;
+import com.xtini.mimalo.Trapsoundboard.Model.TrapStar;
+import com.xtini.mimalo.Trapsoundboard.R;
 
 import java.util.ArrayList;
 
-import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.FIRS_ACCESS;
-import static com.xtini.mimalo.soundbuttongangedition.View.SplashScreenActivity.TONY_EFFE;
+import static com.xtini.mimalo.Trapsoundboard.View.SplashScreenActivity.FIRS_ACCESS;
+import static com.xtini.mimalo.Trapsoundboard.View.SplashScreenActivity.TONY_EFFE;
 
 // import aggiunti per video AdMob
 import com.google.android.gms.ads.AdRequest;
@@ -45,12 +41,12 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog {
 
 
-    public static final String N_ALTRA_VOLTA = "N'altra volta";
     public static final String COMPANY_MAIL = "mailto:mimalogroup@gmail.com";
     public static final String SUBJECT = "?subject=";
     public static final String BODY = "&body=";
     public static final String SE_NON_METTETE_QUESTO_SUONO_SIETE_SOLO_DEGLI_STUPIDI_BUFETTI = "Se non mettete questo suono siete solo degli stupidi bufetti.";
     public static final String AGGIUNTA_SUONO = "Aggiunta suono";
+    public static final String PREMI_DI_NUOVO_PER_CHIUDERE_L_APPLICAZIONE = "Premi di nuovo per chiudere l'applicazione";
     NavigationView navigationView;
     private boolean doubleBackToExitPressedOnce = false;
     private Toast toast;
@@ -76,14 +72,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_star_chooser);
 
         Toolbar toolbar = setActionBar();
-       /* Button button = findViewById(R.id.pigrizia);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UtilitySharedPreferences.clearAll(view.getContext());
-                finish();
-            }
-        });*/
+
         context = this;
         Intent intent = getIntent();
         isFirstAccess = intent.getBooleanExtra(FIRS_ACCESS, false);
@@ -207,7 +196,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }else{
             doubleTapForCloseApp();
         }
     }
@@ -222,7 +211,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         }
 
         this.doubleBackToExitPressedOnce = true;
-        toast = ViewUtilities.createCustomToast(this, drawer, N_ALTRA_VOLTA);
+        toast = ViewUtilities.createCustomToast(this, drawer, PREMI_DI_NUOVO_PER_CHIUDERE_L_APPLICAZIONE);
         toast.show();
 
         new Handler().postDelayed(new Runnable() {
@@ -271,7 +260,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
 
     public void rateUs() {
-        Uri uri = Uri.parse("market://details?id=" + "com.facebook.katana"/*getPackageName()*/); //TODO: scommentare getPackageName()
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
             this.startActivity(myAppLinkToMarket);
@@ -286,7 +275,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             i.setType("text/plain");
             i.putExtra(Intent.EXTRA_SUBJECT, "My application name");
             String sAux = "\nSe non la scarichi sei solo uno stupido BUFU!\n";
-            sAux = sAux + "https://play.google.com/store/apps/details?id=Orion.Soft \n\n";
+            sAux = sAux + "https://play.google.com/store/apps/details?id="+getPackageName()+"\n\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
             navigationView.getMenu().getItem(0).setChecked(false);
             startActivityForResult(Intent.createChooser(i, "Condividi CIUCCIONE!"), 0);

@@ -1,8 +1,6 @@
-package com.xtini.mimalo.soundbuttongangedition.Control;
+package com.xtini.mimalo.Trapsoundboard.Control;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
@@ -11,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
-import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
-import com.xtini.mimalo.soundbuttongangedition.R;
-import com.xtini.mimalo.soundbuttongangedition.View.StarChooserActivity;
-import com.xtini.mimalo.soundbuttongangedition.View.TrapStarActivity;
+import com.xtini.mimalo.Trapsoundboard.Model.AudioFile;
+import com.xtini.mimalo.Trapsoundboard.Model.TrapStar;
+import com.xtini.mimalo.Trapsoundboard.R;
+import com.xtini.mimalo.Trapsoundboard.View.StarChooserActivity;
+import com.xtini.mimalo.Trapsoundboard.View.TrapStarActivity;
 
 import java.util.ArrayList;
 import java.util.List;

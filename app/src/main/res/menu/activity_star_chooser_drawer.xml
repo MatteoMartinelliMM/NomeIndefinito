@@ -28,8 +28,8 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav_chi_siamo"
-            android:icon="@drawable/lifebuoy"
-            android:title="Supporta gli sviluppatori" />
+            android:icon="@drawable/information_outline"
+            android:title="Chi siamo" />
     </group>
 
 </menu>

@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition.Control;
+package com.xtini.mimalo.Trapsoundboard.Control;
 
 
 import android.content.Context;
@@ -19,10 +19,9 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
-import com.xtini.mimalo.soundbuttongangedition.R;
-import com.xtini.mimalo.soundbuttongangedition.View.TrapStarActivity;
-import com.xtini.mimalo.soundbuttongangedition.View.ViewUtilities;
+import com.xtini.mimalo.Trapsoundboard.Model.AudioFile;
+import com.xtini.mimalo.Trapsoundboard.R;
+import com.xtini.mimalo.Trapsoundboard.View.ViewUtilities;
 
 
 
@@ -79,12 +78,7 @@ public class ButtonResViewAdapter extends RecyclerView.Adapter<ButtonResViewAdap
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "futura-heavy-oblique.ttf");
         holder.buttonLabel.setTypeface(typeface);
 
-        /*if (currentButtonName.contains(" ") && currentButtonName.length() > 16)
-            holder.buttonLabel.setText(currentButtonName);
-        else
-            holder.buttonLabel.setText("  " + currentButtonName + "  ");*/
 
-        //currentButtonName = FormatButtonLabel.format(currentButtonName);
         holder.buttonLabel.setText(" "+ currentButtonName+" ");
 
         holder.codeineButton.setOnClickListener(new View.OnClickListener() {

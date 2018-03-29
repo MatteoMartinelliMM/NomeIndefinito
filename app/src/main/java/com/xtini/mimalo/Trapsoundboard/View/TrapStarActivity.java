@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition.View;
+package com.xtini.mimalo.Trapsoundboard.View;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,27 +8,23 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.xtini.mimalo.soundbuttongangedition.Control.ButtonResViewAdapter;
-import com.xtini.mimalo.soundbuttongangedition.Control.MediaPlayerRegistry;
-import com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter;
-import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
+import com.xtini.mimalo.Trapsoundboard.Control.ButtonResViewAdapter;
+import com.xtini.mimalo.Trapsoundboard.Control.MediaPlayerRegistry;
+import com.xtini.mimalo.Trapsoundboard.Control.StarChooserAdapter;
+import com.xtini.mimalo.Trapsoundboard.Model.AudioFile;
 
-import com.xtini.mimalo.soundbuttongangedition.R;
+import com.xtini.mimalo.Trapsoundboard.R;
 
 
 
 import java.util.ArrayList;
 
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.ACTION_UP;
-import static com.xtini.mimalo.soundbuttongangedition.Control.StarChooserAdapter.TRAP_STAR;
+import static com.xtini.mimalo.Trapsoundboard.Control.StarChooserAdapter.TRAP_STAR;
 
 public class TrapStarActivity extends AppCompatActivity{
 

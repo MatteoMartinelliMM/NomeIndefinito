@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition;
+package com.xtini.mimalo.Trapsoundboard;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

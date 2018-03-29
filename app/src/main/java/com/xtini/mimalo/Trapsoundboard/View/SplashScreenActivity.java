@@ -1,4 +1,4 @@
-package com.xtini.mimalo.soundbuttongangedition.View;
+package com.xtini.mimalo.Trapsoundboard.View;
 
 
 import android.app.AlertDialog;
@@ -6,8 +6,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,15 +16,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 
-import com.xtini.mimalo.soundbuttongangedition.Control.UtilitySharedPreferences;
-import com.xtini.mimalo.soundbuttongangedition.Model.AudioFile;
-import com.xtini.mimalo.soundbuttongangedition.Model.TrapStar;
+import com.xtini.mimalo.Trapsoundboard.Control.UtilitySharedPreferences;
+import com.xtini.mimalo.Trapsoundboard.Model.AudioFile;
+import com.xtini.mimalo.Trapsoundboard.Model.TrapStar;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.xtini.mimalo.soundbuttongangedition.R;
+import com.xtini.mimalo.Trapsoundboard.R;
 
 import org.jsoup.Jsoup;
 

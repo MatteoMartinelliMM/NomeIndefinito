@@ -1,27 +1,17 @@
-package com.xtini.mimalo.soundbuttongangedition.View;
+package com.xtini.mimalo.Trapsoundboard.View;
 
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xtini.mimalo.soundbuttongangedition.R;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
+import com.xtini.mimalo.Trapsoundboard.R;
 
 /**
  * Created by matteoma on 3/28/2018.
