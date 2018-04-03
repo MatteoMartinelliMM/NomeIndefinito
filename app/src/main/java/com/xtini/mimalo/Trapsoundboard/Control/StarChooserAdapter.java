@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +108,11 @@ public class StarChooserAdapter extends PagerAdapter {
         artistPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Incremento il valore del count per mostrare Interstitial
+                UtilitySharedPreferences.incrementArtistCount(context);
+                //Log.d("COUNTINT",UtilitySharedPreferences.getClickArtistCount(context)+" click");
+
                 audioFiles = trapStars.get(position).getFileNames();
                 StarChooserActivity temp = (StarChooserActivity) v.getContext();
                 Intent intent = new Intent(temp, TrapStarActivity.class);

@@ -3,6 +3,7 @@ package com.xtini.mimalo.Trapsoundboard.Control;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * Created by matteoma on 3/22/2018.
@@ -12,18 +13,19 @@ public class UtilitySharedPreferences {
 
     public static final String FIRST_ACCESS = "FirstAccess";
     public static final String CLICKED_ARTIST = "ClickedArtist";
+    public static final String CLICK_ARTIST_COUNT = "ClickArtistCount";
 
     //salvo nelle shared nome appena faccio click
-    public static void saveClickedArtistName(Context context , String trapStarName){
+    public static void saveClickedArtistName(Context context, String trapStarName) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(CLICKED_ARTIST,trapStarName);
+        editor.putString(CLICKED_ARTIST, trapStarName);
         editor.commit();
     }
 
-    public static String getClickedArtistName(Context context){
+    public static String getClickedArtistName(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(CLICKED_ARTIST,"");
+        return preferences.getString(CLICKED_ARTIST, "");
     }
 
     public static boolean artistIsUnlocked(Context context, String trapStarname) {
@@ -50,10 +52,27 @@ public class UtilitySharedPreferences {
         }
     }
 
-    public static void clearAll(Context context){
+    public static void clearAll(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
+    }
+
+    public static int getClickArtistCount(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (preferences.contains(CLICK_ARTIST_COUNT))
+            return preferences.getInt(CLICK_ARTIST_COUNT, 0);
+        else
+            return 0;
+    }
+
+    public static void incrementArtistCount(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (preferences.contains(CLICK_ARTIST_COUNT)) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(CLICK_ARTIST_COUNT, getClickArtistCount(context) + 1);
+            editor.commit();
+        }
     }
 }

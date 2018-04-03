@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.xtini.mimalo.Trapsoundboard.Control.ShowExplainDialog;
@@ -64,7 +66,10 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private RewardedVideoAd rewardedVideoAd;
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
     private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
-    private String adMobPubTest = "ca-app-pub-3940256099942544/6300978111";
+    private String AdMobInter ="ca-app-pub-7408325265716426/8288899540";
+    private AdView adBanner;
+    private InterstitialAd interstitialAd;
+    private static final int CNST_FOR_INTER = 3; // numero di volte prima di mostrare Interstitial
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,15 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
         setDrawerMenu(toolbar);
+        adBanner = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adBanner.loadAd(adRequest);
+        //TODO DA METTERE SOTTO QUESTO BANNER NON e' IN LINEA NEL LAYOUT
+
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(AdMobInter);
+        interstitialAd.loadAd(adRequest);
 
     }
 
@@ -147,6 +161,16 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         });
         //for test
         rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
+
+        //CONTROLLO PER QUANDO MOSTRARE INTERSTITIAL OGNI VOLTA CHE ARRIVO IN QUESTA ACTIVITY
+        if (UtilitySharedPreferences.getClickArtistCount(context) % CNST_FOR_INTER == 0) {
+            if (interstitialAd.isLoaded()) {
+                interstitialAd.show();
+            } else {
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        }
+        //Log.d("COUNTINT",UtilitySharedPreferences.getClickArtistCount(context)+"");
     }
 
     private void setDrawerMenu(Toolbar toolbar) {
@@ -196,7 +220,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else{
+        } else {
             doubleTapForCloseApp();
         }
     }
@@ -275,7 +299,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             i.setType("text/plain");
             i.putExtra(Intent.EXTRA_SUBJECT, "My application name");
             String sAux = "\nSe non la scarichi sei solo uno stupido BUFU!\n";
-            sAux = sAux + "https://play.google.com/store/apps/details?id="+getPackageName()+"\n\n";
+            sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n\n";
             i.putExtra(Intent.EXTRA_TEXT, sAux);
             navigationView.getMenu().getItem(0).setChecked(false);
             startActivityForResult(Intent.createChooser(i, "Condividi CIUCCIONE!"), 0);
