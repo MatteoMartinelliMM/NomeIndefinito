@@ -13,8 +13,9 @@
         android:id="@+id/horizontal_cycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_above="@+id/adView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="center"
         app:icvp_center_page_scale_offset="30dp"
@@ -23,6 +24,20 @@
         app:icvp_medium_scaled="false"
         app:icvp_min_page_scale="0.55"
         app:icvp_min_page_scale_offset="-30dp"
-        app:icvp_scroll_duration="250" />
+        app:icvp_scroll_duration="250">
+
+    </com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager>
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-7408325265716426/2040619185" />
+
 
 </RelativeLayout>

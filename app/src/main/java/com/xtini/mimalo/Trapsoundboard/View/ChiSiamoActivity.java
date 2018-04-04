@@ -18,7 +18,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.xtini.mimalo.Trapsoundboard.R;
 
-import static com.xtini.mimalo.Trapsoundboard.View.StarChooserActivity.BODY;
 import static com.xtini.mimalo.Trapsoundboard.View.StarChooserActivity.COMPANY_MAIL;
 
 public class ChiSiamoActivity extends AppCompatActivity {

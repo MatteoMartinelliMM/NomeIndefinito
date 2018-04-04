@@ -9,31 +9,32 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
+        android:background="@color/colorPrimary"
         app:adUnitId="ca-app-pub-7408325265716426/2040619185"></com.google.android.gms.ads.AdView>
 
     <ImageView
         android:id="@+id/img_termini"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/terimi_e_condizioni"
+        android:layout_above="@+id/terimi_e_condizioni "
         android:layout_centerHorizontal="true"
         android:clickable="true"
         app:srcCompat="@drawable/codeine_button_img_license" />
 
     <TextView
-        android:id="@+id/terimi_e_condizioni"
+        android:id="@+id/terimi_e_condizioni "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="54dp"
         android:background="@color/logoColor"
-        android:text="temini e condizioni"
+        android:text=" temini e condizioni "
         android:textAlignment="center"
         android:textColor="@android:color/background_light" />
 
@@ -53,7 +54,7 @@
         android:layout_alignBottom="@+id/imageView4"
         android:layout_centerHorizontal="true"
         android:background="@color/logoColor"
-        android:text="CONTACT: mimalogroup@gmail.com"
+        android:text="  CONTACT: mimalogroup@gmail.com  "
         android:textColor="@android:color/background_light"
         android:textSize="18sp" />
 

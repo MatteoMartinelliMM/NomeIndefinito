@@ -24,13 +24,4 @@
         app:headerLayout="@layout/nav_header_star_chooser"
         app:menu="@menu/activity_star_chooser_drawer" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_centerHorizontal="false"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-7408325265716426/2040619185"></com.google.android.gms.ads.AdView>
-
 </android.support.v4.widget.DrawerLayout>

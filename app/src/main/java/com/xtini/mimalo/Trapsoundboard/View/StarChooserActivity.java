@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,8 +16,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
@@ -54,7 +59,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private Toast toast;
     private DrawerLayout drawer;
     private ArrayList<TrapStar> trapStars;
-    public static boolean isFirstAccess;
     private int index;
     private HorizontalInfiniteCycleViewPager pager;
     private Context context;
@@ -69,7 +73,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     private String AdMobInter ="ca-app-pub-7408325265716426/8288899540";
     private AdView adBanner;
     private InterstitialAd interstitialAd;
-    private static final int CNST_FOR_INTER = 3; // numero di volte prima di mostrare Interstitial
+    private static final int CNST_FOR_INTER = 4; // numero di volte prima di mostrare Interstitial
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +84,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
         context = this;
         Intent intent = getIntent();
-        isFirstAccess = intent.getBooleanExtra(FIRS_ACCESS, false);
         showExplainDialog = this;
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
@@ -88,7 +91,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         adBanner = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adBanner.loadAd(adRequest);
-        //TODO DA METTERE SOTTO QUESTO BANNER NON e' IN LINEA NEL LAYOUT
 
 
         interstitialAd = new InterstitialAd(this);
@@ -185,6 +187,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     }
 
     private Toolbar setActionBar() {
+
         setTitle("Trap Soundboard");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

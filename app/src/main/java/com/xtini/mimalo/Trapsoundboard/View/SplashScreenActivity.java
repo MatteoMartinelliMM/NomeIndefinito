@@ -123,7 +123,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void updateUi() {
         Intent intent = new Intent(this, StarChooserActivity.class);
-        intent.putExtra(FIRS_ACCESS, firstAccess);
         startActivity(intent);
         finish();
     }
