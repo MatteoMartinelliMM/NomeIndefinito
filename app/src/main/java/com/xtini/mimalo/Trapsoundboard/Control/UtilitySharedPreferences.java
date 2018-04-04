@@ -63,16 +63,26 @@ public class UtilitySharedPreferences {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (preferences.contains(CLICK_ARTIST_COUNT))
             return preferences.getInt(CLICK_ARTIST_COUNT, 0);
-        else
+        else {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(CLICK_ARTIST_COUNT,0);
             return 0;
+        }
     }
 
     public static void incrementArtistCount(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (preferences.contains(CLICK_ARTIST_COUNT)) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt(CLICK_ARTIST_COUNT, getClickArtistCount(context) + 1);
-            editor.commit();
-        }
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(CLICK_ARTIST_COUNT, getClickArtistCount(context) + 1);
+        editor.commit();
+
+    }
+
+    public static void clearNrOfClick(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(CLICK_ARTIST_COUNT, 0);
+        editor.commit();
+
     }
 }

@@ -7,15 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.xtini.mimalo.Trapsoundboard.Control.ButtonResViewAdapter;
 import com.xtini.mimalo.Trapsoundboard.Control.MediaPlayerRegistry;
 import com.xtini.mimalo.Trapsoundboard.Control.StarChooserAdapter;
+import com.xtini.mimalo.Trapsoundboard.Control.UtilitySharedPreferences;
 import com.xtini.mimalo.Trapsoundboard.Model.AudioFile;
 
 import com.xtini.mimalo.Trapsoundboard.R;
@@ -26,20 +30,26 @@ import java.util.ArrayList;
 
 import static com.xtini.mimalo.Trapsoundboard.Control.StarChooserAdapter.TRAP_STAR;
 
-public class TrapStarActivity extends AppCompatActivity{
+public class TrapStarActivity extends AppCompatActivity {
 
+    //View Elements
     private RecyclerView buttonList;
     private GridLayoutManager gm;
     private ButtonResViewAdapter buttonsAdapter;
+    private RelativeLayout parentLayout;
+    private AdView AdBanner;
+    private InterstitialAd interstitialAd;
+    //Model Elements
     private String trapStarName;
     private ArrayList<AudioFile> audioFiles;
-    private RelativeLayout parentLayout;
+    private String adMobPubTest = "ca-app-pub-3940256099942544/6300978111";
+    private String AdMobInter ="ca-app-pub-7408325265716426/8288899540";
+    //Controller Elements
     private boolean playerIsReleased = false;
     private AudioManager audio;
-    private String AdBannerId = "ca-app-pub-7408325265716426/2040619185";
-    private AdView AdBanner ;
-    private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
-    private String adMobPubTest = "ca-app-pub-3940256099942544/6300978111";
+    private static final int CNST_FOR_INTER = 5; // numero di volte prima di mostrare Interstitial
+    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +66,18 @@ public class TrapStarActivity extends AppCompatActivity{
         buttonsAdapter = new ButtonResViewAdapter(audioFiles,this, parentLayout);
         buttonList.setLayoutManager(gm);
         buttonList.setAdapter(buttonsAdapter);
-
+        context = this;
 
         MobileAds.initialize(this, adMobPubTest);
         //Inizializzazione Banner in View
         AdBanner = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         AdBanner.loadAd(adRequest);
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(AdMobInter);
+        interstitialAd.loadAd(adRequest);
+        interstitialAd.setImmersiveMode(true);
+
     }
 
     @Override
@@ -75,6 +90,26 @@ public class TrapStarActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
+        interstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (UtilitySharedPreferences.getClickArtistCount(context) == CNST_FOR_INTER ) {
+                    if (interstitialAd.isLoaded()) {
+                        UtilitySharedPreferences.clearNrOfClick(context);
+                        interstitialAd.show();
+                    }else{
+                        interstitialAd.loadAd(new AdRequest.Builder().build());
+                    }
+                }
+            }
+
+            @Override
+            public void onAdClosed() {
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
+
     }
 
     @Override
@@ -103,4 +138,5 @@ public class TrapStarActivity extends AppCompatActivity{
                 return false;
         }
     }
+
 }

@@ -47,33 +47,32 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 
 public class StarChooserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShowExplainDialog {
 
-
+    //View Elements
+    private AlertDialog.Builder builder;
+    private AlertDialog alert;
+    private Toast toast;
+    private DrawerLayout drawer;
+    NavigationView navigationView;
+    private RewardedVideoAd rewardedVideoAd;
+    private AdView adBanner;
+    //Model Elenents
     public static final String COMPANY_MAIL = "mailto:mimalogroup@gmail.com";
     public static final String SUBJECT = "?subject=";
     public static final String BODY = "&body=";
     public static final String SE_NON_METTETE_QUESTO_SUONO_SIETE_SOLO_DEGLI_STUPIDI_BUFETTI = "Se non mettete questo suono siete solo degli stupidi bufetti.";
     public static final String AGGIUNTA_SUONO = "Aggiunta suono";
     public static final String PREMI_DI_NUOVO_PER_CHIUDERE_L_APPLICAZIONE = "Premi di nuovo per chiudere l'applicazione";
-    NavigationView navigationView;
-    private boolean doubleBackToExitPressedOnce = false;
-    private Toast toast;
-    private DrawerLayout drawer;
     private ArrayList<TrapStar> trapStars;
+    //Variabili per caricamento videoAd
+    private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
+    private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
+    //Controllr Elements
+    private boolean doubleBackToExitPressedOnce = false;
     private int index;
     private HorizontalInfiniteCycleViewPager pager;
     private Context context;
-    private AlertDialog.Builder builder;
-    private AlertDialog alert;
     private ShowExplainDialog showExplainDialog;
 
-    //Variabili per caricamento videoAd
-    private RewardedVideoAd rewardedVideoAd;
-    private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
-    private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
-    private String AdMobInter ="ca-app-pub-7408325265716426/8288899540";
-    private AdView adBanner;
-    private InterstitialAd interstitialAd;
-    private static final int CNST_FOR_INTER = 4; // numero di volte prima di mostrare Interstitial
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,20 +82,16 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         Toolbar toolbar = setActionBar();
 
         context = this;
-        Intent intent = getIntent();
+
         showExplainDialog = this;
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
+
         setDrawerMenu(toolbar);
+
         adBanner = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adBanner.loadAd(adRequest);
-
-
-        interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId(AdMobInter);
-        interstitialAd.loadAd(adRequest);
-
     }
 
     @Override
@@ -109,13 +104,10 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             public void onRewardedVideoAdLoaded() {
                 Log.d("An ad has Loaded", "AdMob");
             }
-
             @Override
             public void onRewardedVideoAdOpened() {
                 Log.d("An ad has Opened", "AdMob");
-
             }
-
             @Override
             public void onRewardedVideoStarted() {
                 Log.d("An ad has Started", "AdMob");
@@ -141,20 +133,16 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
 
                 rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
                 rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
-
             }
 
             @Override
             public void onRewardedVideoAdLeftApplication() {
                 Log.d("Video Left Application", "AdMob");
             }
-
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
                 Log.d("An ad has FailedToLoad", "AdMob");
-
             }
-
             @Override
             public void onRewardedVideoCompleted() {
                 Log.d("An ad has Loaded", "AdMob");
@@ -163,17 +151,8 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         });
         //for test
         rewardedVideoAd.loadAd(AdMobPubId, new AdRequest.Builder().build());
-
-        //CONTROLLO PER QUANDO MOSTRARE INTERSTITIAL OGNI VOLTA CHE ARRIVO IN QUESTA ACTIVITY
-        if (UtilitySharedPreferences.getClickArtistCount(context) % CNST_FOR_INTER == 0) {
-            if (interstitialAd.isLoaded()) {
-                interstitialAd.show();
-            } else {
-                interstitialAd.loadAd(new AdRequest.Builder().build());
-            }
-        }
-        //Log.d("COUNTINT",UtilitySharedPreferences.getClickArtistCount(context)+"");
     }
+
 
     private void setDrawerMenu(Toolbar toolbar) {
         drawer = findViewById(R.id.drawer_layout);
