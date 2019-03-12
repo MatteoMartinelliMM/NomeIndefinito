@@ -63,7 +63,7 @@ public class TrapStarActivity extends AppCompatActivity {
         parentLayout = findViewById(R.id.parentLayout);
         buttonList = findViewById(R.id.buttonList);
         gm = new GridLayoutManager(this,3);
-        buttonsAdapter = new ButtonResViewAdapter(audioFiles,this, parentLayout);
+        buttonsAdapter = new ButtonResViewAdapter(audioFiles,this, parentLayout,trapStarName);
         buttonList.setLayoutManager(gm);
         buttonList.setAdapter(buttonsAdapter);
         context = this;

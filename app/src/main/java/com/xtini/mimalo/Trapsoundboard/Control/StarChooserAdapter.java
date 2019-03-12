@@ -84,7 +84,11 @@ public class StarChooserAdapter extends PagerAdapter {
 
     private void lockedArtistActions(final int position) {
         artistName.setText(" " + "??????"+ " ");
-        int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase() + LOCKED, "drawable", context.getPackageName());
+        String trapstarName = trapStars.get(position).getTrapStarName();
+        if(trapstarName.contains("6ix")){
+            trapstarName = "a"+trapstarName;
+        }
+        int id = context.getResources().getIdentifier(trapstarName.toLowerCase() + LOCKED, "drawable", context.getPackageName());
         artistPicture.setImageResource(id);
         artistName.setBackgroundResource(R.color.disabledTextView);
         artistName.setTextColor(context.getResources().getColor(R.color.disabledTextColor));
@@ -103,20 +107,23 @@ public class StarChooserAdapter extends PagerAdapter {
 
     private void unlockedArtistActions(final int position) {
         artistName.setText(" " + trapStars.get(position).getTrapStarName() + " ");
-        int id = context.getResources().getIdentifier(trapStars.get(position).getTrapStarName().toLowerCase(), "drawable", context.getPackageName());
+        String trapstarName = trapStars.get(position).getTrapStarName();
+        if(trapstarName.contains("6ix")){
+            trapstarName = "a"+trapstarName;
+        }
+        int id = context.getResources().getIdentifier(trapstarName.toLowerCase(), "drawable", context.getPackageName());
         artistPicture.setImageResource(id);
+        final String finalTrapstarName = trapstarName;
         artistPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // Incremento il valore del count per mostrare Interstitial
                 UtilitySharedPreferences.incrementArtistCount(context);
-                //Log.d("COUNTINT",UtilitySharedPreferences.getClickArtistCount(context)+" click");
-
                 audioFiles = trapStars.get(position).getFileNames();
                 StarChooserActivity temp = (StarChooserActivity) v.getContext();
                 Intent intent = new Intent(temp, TrapStarActivity.class);
-                intent.putExtra(TRAP_STAR, artistName.getText());
+                intent.putExtra(TRAP_STAR, finalTrapstarName);
                 temp.startActivity(intent);
             }
         });

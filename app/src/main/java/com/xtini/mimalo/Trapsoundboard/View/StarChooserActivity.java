@@ -178,7 +178,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         pager = findViewById(R.id.horizontal_cycle);
         StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(), this, showExplainDialog);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(index, true);
+        pager.setCurrentItem(index,false);
     }
 
 

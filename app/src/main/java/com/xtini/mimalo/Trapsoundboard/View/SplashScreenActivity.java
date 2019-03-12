@@ -58,6 +58,11 @@ public class SplashScreenActivity extends AppCompatActivity {
             try {
                 String[] artistsFolder = getAssets().list(TRAP_SB_DATA);
                 int howManyArtist = artistsFolder.length;
+                int index = 0;
+                for (String artistName : artistsFolder) {
+                    UtilitySharedPreferences.artistFolderPosition(this, artistName + "_folder", index);
+                    index++;
+                }
                 if (UtilitySharedPreferences.isTheFirstAccess(this)) { //SE USR FA PRIMO ACCESSO ALL APP -> NON PERMETTO ALL'USR DI ACCEDERE ALL'ACTIVITY DEI BOTTONI
                     for (int i = 0; i < howManyArtist; i++) {
                         if (!artistsFolder[i].equalsIgnoreCase(TONY_EFFE))

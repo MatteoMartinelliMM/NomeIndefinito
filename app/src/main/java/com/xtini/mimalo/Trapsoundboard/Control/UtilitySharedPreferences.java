@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.xtini.mimalo.Trapsoundboard.View.SplashScreenActivity;
+
 /**
  * Created by matteoma on 3/22/2018.
  */
@@ -65,7 +67,7 @@ public class UtilitySharedPreferences {
             return preferences.getInt(CLICK_ARTIST_COUNT, 0);
         else {
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt(CLICK_ARTIST_COUNT,0);
+            editor.putInt(CLICK_ARTIST_COUNT, 0);
             return 0;
         }
     }
@@ -84,5 +86,17 @@ public class UtilitySharedPreferences {
         editor.putInt(CLICK_ARTIST_COUNT, 0);
         editor.commit();
 
+    }
+
+    public static void artistFolderPosition(Context context, String artistName, int index) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(artistName, index);
+        editor.commit();
+    }
+
+    public static int getArtistFolderPosition(Context context, String artistName) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getInt(artistName, -1);
     }
 }
