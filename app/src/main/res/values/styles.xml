@@ -31,8 +31,12 @@
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:buttonBarPositiveButtonStyle" tools:targetApi="lollipop">@style/PositiveButtonStyle</item>
-        <item name="android:buttonBarNegativeButtonStyle" tools:targetApi="lollipop">@style/PositiveButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle" tools:targetApi="lollipop">
+            @style/PositiveButtonStyle
+        </item>
+        <item name="android:buttonBarNegativeButtonStyle" tools:targetApi="lollipop">
+            @style/PositiveButtonStyle
+        </item>
     </style>
 
 </resources>
