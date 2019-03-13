@@ -96,12 +96,11 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             @Override
             public void onClick(View v) {
                 Random r = new Random();
-                int i = r.nextInt(30);
-                pager.setCurrentItem(i % trapStars.size(),false);
+                int rand = r.nextInt(30);
+                pager.setCurrentItem(rand % trapStars.size());
             }
         });
         setDrawerMenu(toolbar);
-
         adBanner = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adBanner.loadAd(adRequest);
