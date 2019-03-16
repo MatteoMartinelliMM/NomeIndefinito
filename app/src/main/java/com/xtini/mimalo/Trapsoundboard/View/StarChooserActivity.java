@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +21,6 @@ import android.text.SpannableString;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +36,6 @@ import com.xtini.mimalo.Trapsoundboard.Model.TrapStar;
 import com.xtini.mimalo.Trapsoundboard.R;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static com.xtini.mimalo.Trapsoundboard.View.SplashScreenActivity.FIRS_ACCESS;
 import static com.xtini.mimalo.Trapsoundboard.View.SplashScreenActivity.TONY_EFFE;
@@ -67,7 +63,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     public static final String AGGIUNTA_SUONO = "Aggiunta suono";
     public static final String PREMI_DI_NUOVO_PER_CHIUDERE_L_APPLICAZIONE = "Premi di nuovo per chiudere l'applicazione";
     private ArrayList<TrapStar> trapStars;
-    private FloatingActionButton random;
     //Variabili per caricamento videoAd
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
     private String AdMobPubId = "ca-app-pub-7408325265716426/7975763724";
@@ -91,15 +86,6 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         showExplainDialog = this;
         trapStars = SplashScreenActivity.trapStars;
         setTheCarusel(TONY_EFFE);
-        random = findViewById(R.id.random);
-        random.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Random r = new Random();
-                int rand = r.nextInt(30);
-                pager.setCurrentItem(rand % trapStars.size());
-            }
-        });
         setDrawerMenu(toolbar);
         adBanner = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -116,12 +102,10 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             public void onRewardedVideoAdLoaded() {
                 Log.d("An ad has Loaded", "AdMob");
             }
-
             @Override
             public void onRewardedVideoAdOpened() {
                 Log.d("An ad has Opened", "AdMob");
             }
-
             @Override
             public void onRewardedVideoStarted() {
                 Log.d("An ad has Started", "AdMob");
@@ -153,12 +137,10 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             public void onRewardedVideoAdLeftApplication() {
                 Log.d("Video Left Application", "AdMob");
             }
-
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
                 Log.d("An ad has FailedToLoad", "AdMob");
             }
-
             @Override
             public void onRewardedVideoCompleted() {
                 Log.d("An ad has Loaded", "AdMob");
@@ -194,7 +176,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         pager = findViewById(R.id.horizontal_cycle);
         StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(), this, showExplainDialog);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(index, false);
+        pager.setCurrentItem(index,false);
     }
 
 
