@@ -135,7 +135,7 @@ public class SplashScreenActivity extends AppCompatActivity implements RestCall.
                         try {
                             context.startActivity(myAppLinkToMarket);
                         } catch (ActivityNotFoundException e) {
-                            Toast.makeText(context, " Sorry, Not able to open!", Toast.LENGTH_SHORT).show();
+                            ViewUtilities.createCustomToast(context, findViewById(android.R.id.content), " Impossibile aprire il contenuto!").show();
                         }
                     }
                 }).setNegativeButton("No!", new DialogInterface.OnClickListener() {
