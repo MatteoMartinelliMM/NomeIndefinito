@@ -1,6 +1,7 @@
 package com.xtini.mimalo.Trapsoundboard.View;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -24,13 +25,10 @@ import com.xtini.mimalo.Trapsoundboard.Model.AudioFile;
 import com.xtini.mimalo.Trapsoundboard.Model.TrapStar;
 
 import java.io.IOException;
-import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.xtini.mimalo.Trapsoundboard.R;
-
-import static android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS;
 
 
 /**
@@ -40,13 +38,11 @@ import static android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS;
 public class SplashScreenActivity extends AppCompatActivity implements RestCall.OnResultReceived {
     public static final String TRAP_SB_DATA = "TrapSBData";
 
-    public static final String FIRST_ACCESS = "FirstAccess";
     public static final String TONY_EFFE = "TonyEffe";
     public static final String FIRS_ACCESS = "FirsAccess";
-    private String assetsPath = "///android_asset/TrapSBData/";
-    private boolean firstAccess = false;
     public static ArrayList<TrapStar> trapStars;
     private AlertDialog alert;
+    private boolean firstAccess = false;
     private AlertDialog.Builder builder;
     private Context context;
     private boolean flag = false;
@@ -141,8 +137,7 @@ public class SplashScreenActivity extends AppCompatActivity implements RestCall.
                 }).setNegativeButton("No!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SplashScreenActivity splashScreenActivity = (SplashScreenActivity) dialogInterface;
-                        splashScreenActivity.finish();
+                        finish();
                     }
                 });
 
@@ -162,8 +157,7 @@ public class SplashScreenActivity extends AppCompatActivity implements RestCall.
                 }).setNegativeButton("No!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SplashScreenActivity splashScreenActivity = (SplashScreenActivity) dialogInterface;
-                        splashScreenActivity.finish();
+                        finish();
                     }
                 }).setNeutralButton("Wi-Fi", new DialogInterface.OnClickListener() {
                     @Override
@@ -204,7 +198,6 @@ public class SplashScreenActivity extends AppCompatActivity implements RestCall.
         } else {
             showUpdateDialog();
         }
-
     }
 
     @Override

@@ -59,7 +59,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
     public static final String COMPANY_MAIL = "mailto:mimalogroup@gmail.com";
     public static final String SUBJECT = "?subject=";
     public static final String BODY = "&body=";
-    public static final String SE_NON_METTETE_QUESTO_SUONO_SIETE_SOLO_DEGLI_STUPIDI_BUFETTI = "Se non mettete questo suono siete solo degli stupidi bufetti.";
+    public static final String SE_NON_METTETE_QUESTO_SUONO_SIETE_SOLO_DEGLI_STUPIDI_BUFETTI = "Se non mettete questo suono siete solo degli stupidi bufi.";
     public static final String AGGIUNTA_SUONO = "Aggiunta suono";
     public static final String PREMI_DI_NUOVO_PER_CHIUDERE_L_APPLICAZIONE = "Premi di nuovo per chiudere l'applicazione";
     private ArrayList<TrapStar> trapStars;
