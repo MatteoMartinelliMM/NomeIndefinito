@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -16,7 +17,6 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
 
 import com.xtini.mimalo.Trapsoundboard.BuildConfig;
 import com.xtini.mimalo.Trapsoundboard.Control.RestCall;
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.xtini.mimalo.Trapsoundboard.R;
+
 
 
 /**
@@ -47,6 +48,7 @@ public class SplashScreenActivity extends AppCompatActivity implements RestCall.
     private Context context;
     private boolean flag = false;
     private ArrayList<AudioFile> trapStarsAudio;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class SplashScreenActivity extends AppCompatActivity implements RestCall.
         trapStars = new ArrayList<>();
         context = this;
         trapStarsAudio = new ArrayList<>();
+        mp = MediaPlayer.create(context,R.raw.loading);
+        mp.start();
         if (!isNetworkAvailable())
             showNoConnectionDialog();
         else {
@@ -172,6 +176,7 @@ public class SplashScreenActivity extends AppCompatActivity implements RestCall.
     }
 
     private void updateUi() {
+        mp.stop();
         Intent intent = new Intent(this, StarChooserActivity.class);
         startActivity(intent);
         finish();
