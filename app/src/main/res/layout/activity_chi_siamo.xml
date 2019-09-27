@@ -15,19 +15,19 @@
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
         android:background="@color/colorPrimary"
-        app:adUnitId="ca-app-pub-7408325265716426/2040619185"></com.google.android.gms.ads.AdView>
+        app:adUnitId="ca-app-pub-7408325265716426/6555240267"></com.google.android.gms.ads.AdView>
 
     <ImageView
         android:id="@+id/img_termini"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_above="@+id/terimi_e_condizioni "
+        android:layout_above="@+id/terimi_e_condizioni"
         android:layout_centerHorizontal="true"
         android:clickable="true"
         app:srcCompat="@drawable/codeine_button_img_license" />
 
     <TextView
-        android:id="@+id/terimi_e_condizioni "
+        android:id="@+id/terimi_e_condizioni"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"

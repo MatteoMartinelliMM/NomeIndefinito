@@ -23,10 +23,11 @@ import static com.xtini.mimalo.Trapsoundboard.View.StarChooserActivity.COMPANY_M
 public class ChiSiamoActivity extends AppCompatActivity {
     private AdView AdBanner;
     private String AdMobAppId = "ca-app-pub-7408325265716426~9273012450";
-    private String AdBannerId = "ca-app-pub-7408325265716426/2040619185";
+    private String AdBannerId = "ca-app-pub-7408325265716426/6555240267";
     private TextView termini_e_condizioni, contatti;
     private ImageView img_termini;
     private Context context;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class ChiSiamoActivity extends AppCompatActivity {
 
         context = this;
 
+
         termini_e_condizioni = findViewById(R.id.terimi_e_condizioni);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "futura-heavy-oblique.ttf");
         contatti = findViewById(R.id.contact);
@@ -48,7 +50,7 @@ public class ChiSiamoActivity extends AppCompatActivity {
         contatti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String uriText = COMPANY_MAIL ;
+                String uriText = COMPANY_MAIL;
 
                 Uri uri = Uri.parse(uriText);
 
@@ -64,7 +66,7 @@ public class ChiSiamoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
-                termini_e_condizioni.startAnimation(AnimationUtils.loadAnimation(context,R.anim.button_clicked));
+                termini_e_condizioni.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_clicked));
                 onClickShowLicenceDialog();
             }
         });
@@ -72,9 +74,9 @@ public class ChiSiamoActivity extends AppCompatActivity {
 
     }
 
-    public void onClickShowLicenceDialog(){
+    public void onClickShowLicenceDialog() {
         LicenceDialog licenceDialog = new LicenceDialog();
-        licenceDialog.setStyle(DialogFragment.STYLE_NORMAL,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+        licenceDialog.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         licenceDialog.show(getFragmentManager(), "");
     }
 }

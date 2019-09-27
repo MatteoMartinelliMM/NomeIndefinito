@@ -88,7 +88,9 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         setTheCarusel(TONY_EFFE);
         setDrawerMenu(toolbar);
         adBanner = findViewById(R.id.adView);
+        //FIXME rimuovere
         AdRequest adRequest = new AdRequest.Builder().build();
+
         adBanner.loadAd(adRequest);
     }
 
@@ -102,10 +104,12 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             public void onRewardedVideoAdLoaded() {
                 Log.d("An ad has Loaded", "AdMob");
             }
+
             @Override
             public void onRewardedVideoAdOpened() {
                 Log.d("An ad has Opened", "AdMob");
             }
+
             @Override
             public void onRewardedVideoStarted() {
                 Log.d("An ad has Started", "AdMob");
@@ -137,10 +141,12 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
             public void onRewardedVideoAdLeftApplication() {
                 Log.d("Video Left Application", "AdMob");
             }
+
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
                 Log.d("An ad has FailedToLoad", "AdMob");
             }
+
             @Override
             public void onRewardedVideoCompleted() {
                 Log.d("An ad has Loaded", "AdMob");
@@ -176,7 +182,7 @@ public class StarChooserActivity extends AppCompatActivity implements Navigation
         pager = findViewById(R.id.horizontal_cycle);
         StarChooserAdapter adapter = new StarChooserAdapter(trapStars, getBaseContext(), this, showExplainDialog);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(index,false);
+        pager.setCurrentItem(index, false);
     }
 
 
